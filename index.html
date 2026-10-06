@@ -1,22 +1,27 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-
-<script>
-  // Protección: si no hay sesión → login
-  (function () {
-    const haySesion = !!localStorage.getItem('pym_json_sesion');
-    if (!haySesion) {
-      location.replace('login.html');
-      return;
-    }
-  })();
-</script>
-<button onclick="AUTH.cerrarSesion(); location.replace('login.html');"
-        class="pym-btn-logout" title="Cerrar sesión">Salir</button>  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>PYM JSON - Lector y Conversor</title>
+
+  <!-- ============================================================
+       PROTECCIÃ“N DE RUTA (antes de todo)
+       Si no hay sesiÃ³n â†’ redirige a login.html
+       ============================================================ -->
+  <script>
+    (function () {
+      try {
+        const haySesion = !!localStorage.getItem('pym_json_sesion');
+        if (!haySesion) {
+          location.replace('login.html');
+        }
+      } catch (e) {
+        // localStorage no disponible â†’ mandamos a login por las dudas
+        location.replace('login.html');
+      }
+    })();
+  </script>
 
   <!-- PWA -->
   <link rel="manifest" href="manifest.json">
@@ -27,7 +32,7 @@
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="icon" type="image/png" href="icon-192.png">
 
-  <!-- Nuestro estilo -->
+  <!-- Estilo principal -->
   <link rel="stylesheet" href="css/estilo.css">
 </head>
 <body data-plataforma="pc">
@@ -47,6 +52,9 @@
       <small id="pym-info-archivo" class="pym-visitas">
         JSON: (ninguno) &nbsp;|&nbsp; Tipo: -
       </small>
+      <button id="pym-btn-salir" class="pym-btn-logout" title="Cerrar sesiÃ³n">
+        Salir
+      </button>
     </div>
   </header>
 
@@ -76,25 +84,40 @@
        SCRIPTS (el orden importa)
        ============================================================ -->
 
-  <!-- 1. Base: config, plataforma, ui -->
+  <!-- 1. AutenticaciÃ³n (debe ir primero) -->
+  <script src="js/auth.js"></script>
+
+  <!-- 2. Base: config, plataforma, ui -->
   <script src="js/config.js"></script>
   <script src="js/plataforma.js"></script>
   <script src="js/ui.js"></script>
 
-  <!-- 2. Estado global y sistema de ventanas -->
+  <!-- 3. Estado global y sistema de ventanas -->
   <script src="js/estado.js"></script>
   <script src="js/ventana.js"></script>
 
-  <!-- 3. Acciones (cada una registra su objeto global ACCION_*) -->
+  <!-- 4. Acciones (cada una registra su objeto global ACCION_*) -->
   <script src="js/acciones/cargar-json.js"></script>
   <script src="js/acciones/json-a-csv.js"></script>
   <script src="js/acciones/split.js"></script>
 
-  <!-- 4. MenÃº (depende de las acciones) -->
+  <!-- 5. MenÃº (depende de las acciones) -->
   <script src="js/menu.js"></script>
 
-  <!-- 5. Arranque -->
+  <!-- 6. Arranque -->
   <script src="js/main.js"></script>
+
+  <!-- ============================================================
+       BOTÃ“N SALIR (logout)
+       ============================================================ -->
+  <script>
+    document.getElementById('pym-btn-salir')?.addEventListener('click', () => {
+      if (confirm('Â¿Cerrar sesiÃ³n?')) {
+        AUTH.cerrarSesion();
+        location.replace('login.html');
+      }
+    });
+  </script>
 
   <!-- ============================================================
        SERVICE WORKER
