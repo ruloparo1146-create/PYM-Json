@@ -77,4 +77,61 @@ const ACCION_JSON_A_CSV = (() => {
 
     const opcionesArray = esArray
       ? '<option value="">(raÃ­z)</option>'
-      : arrays.map(a => `<option value="${UI.esc(a)}">${UI.esc(a)}</option>`
+      : arrays.map(a => `<option value="${UI.esc(a)}">${UI.esc(a)}</option>`).join('');
+
+    const html = `
+      ${!esArray ? `
+        <div class="pym-campo">
+          <label>Array a exportar</label>
+          <select id="j2c-array">${opcionesArray}</select>
+        </div>
+      ` : ''}
+      <div class="pym-campo">
+        <label>Separador</label>
+        <select id="j2c-sep">
+          <option value=";">Punto y coma ( ; ) â€” Excel ES</option>
+          <option value=",">Coma ( , ) â€” Internacional</option>
+          <option value="\t">Tabulador</option>
+        </select>
+      </div>
+      <div class="pym-campo">
+        <label>
+          <input type="checkbox" id="j2c-encab" checked> Incluir encabezados
+        </label>
+      </div>
+      <div class="pym-campo">
+        <label>Nombre del archivo de salida</label>
+        <input type="text" id="j2c-nombre"
+               value="${UI.esc((ESTADO.datos.rutaJSON || 'salida').replace(/\.json$/i, '') + '.csv')}">
+      </div>
+    `;
+
+    const v = VENTANA.abrir({
+      titulo: '12) JSON â†’ CSV',
+      ancho: 520,
+      html,
+      botones: [
+        { texto: 'Cancelar', clase: 'secundario', onClick: v => v.cerrar() },
+        { texto: 'Convertir', onClick: (v) => {
+            try {
+              const sep = v.cuerpo.querySelector('#j2c-sep').value;
+              const conEncab = v.cuerpo.querySelector('#j2c-encab').checked;
+              const selArr = v.cuerpo.querySelector('#j2c-array');
+              const arrNom = selArr ? selArr.value : '';
+              const nombre = v.cuerpo.querySelector('#j2c-nombre').value || 'salida.csv';
+
+              const csv = generarCSV(obj, arrNom, sep, conEncab);
+              UI.descargar(nombre, csv, 'text/csv');
+              UI.toast('CSV generado: ' + nombre);
+              v.cerrar();
+            } catch (e) {
+              UI.toast('Error: ' + e.message, 'error');
+            }
+          }
+        }
+      ]
+    });
+  }
+
+  return { ejecutar, generarCSV };
+})();
