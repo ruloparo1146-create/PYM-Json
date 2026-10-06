@@ -1,0 +1,124 @@
+/* ============================================================
+   Login por PIN
+   ============================================================ */
+
+.auth-container {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #d0f0d0 0%, #a8e0a8 100%);
+}
+
+.auth-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+  padding: 30px 24px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.auth-header { margin-bottom: 24px; }
+.auth-logo {
+  width: 72px; height: 72px;
+  margin-bottom: 10px;
+  border-radius: 16px;
+}
+.auth-header h1 {
+  margin: 0;
+  color: #205020;
+  font-size: 1.6rem;
+  letter-spacing: 1px;
+}
+.auth-subtitle {
+  color: #4caf50;
+  font-size: 0.85rem;
+  margin: 4px 0 0;
+}
+
+.auth-titulo {
+  color: #205020;
+  font-size: 1.1rem;
+  margin: 0 0 6px;
+}
+.auth-desc {
+  color: #666;
+  font-size: 0.85rem;
+  margin: 0 0 18px;
+}
+
+/* ================= PIN DISPLAY ================= */
+.pin-display {
+  display: flex; justify-content: center; gap: 14px;
+  margin: 18px 0 24px;
+}
+.pin-dot {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 2px solid #a0c8a0;
+  background: transparent;
+  transition: all 0.15s ease;
+}
+.pin-dot.activo {
+  background: #4caf50;
+  border-color: #4caf50;
+  transform: scale(1.15);
+}
+.pin-dot.error {
+  background: #c62828;
+  border-color: #c62828;
+  animation: shake 0.3s;
+}
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* ================= TECLADO ================= */
+.pin-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 0 auto;
+  max-width: 280px;
+}
+.pin-key {
+  background: #f8fff8;
+  border: 2px solid #a0c8a0;
+  border-radius: 12px;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #205020;
+  padding: 16px 0;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  user-select: none;
+}
+.pin-key:hover { background: #e8ffe8; border-color: #4caf50; }
+.pin-key:active { transform: scale(0.95); background: #4caf50; color: #fff; }
+.pin-key-borrar { color: #c62828; font-size: 1.2rem; }
+.pin-key-ok { color: #2e7d32; background: #e8ffe8; font-size: 1.2rem; }
+
+/* ================= ERRORES ================= */
+.error-msg {
+  color: #c62828;
+  font-size: 0.85rem;
+  min-height: 20px;
+  margin: 14px 0 0;
+}
+
+/* ================= LINKS ================= */
+.link-btn {
+  background: none; border: none;
+  color: #4caf50;
+  font-size: 0.8rem;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-top: 16px;
+  padding: 4px;
+}
+.link-btn:hover { color: #2e7d32; }
+
+.hidden { display: none !important; }
