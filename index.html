@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>PYM JSON - Web</title>
+  <title>PYM JSON - Lector y Conversor</title>
 
   <!-- PWA -->
   <link rel="manifest" href="manifest.json">
@@ -11,12 +11,17 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="PYM JSON">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="icon" type="image/png" href="icon-192.png">
 
+  <!-- Nuestro estilo -->
   <link rel="stylesheet" href="css/estilo.css">
 </head>
 <body data-plataforma="pc">
 
-  <!-- ================= HEADER ================= -->
+  <!-- ============================================================
+       HEADER
+       ============================================================ -->
   <header class="pym-header">
     <div class="pym-header-fila">
       <h1 class="pym-titulo">PYM JSON</h1>
@@ -32,32 +37,88 @@
     </div>
   </header>
 
-  <!-- ================= MENÃš ================= -->
+  <!-- ============================================================
+       MENÃš PRINCIPAL
+       ============================================================ -->
   <main class="pym-main">
-    <div id="pym-menu" class="pym-menu"><!-- lo dibuja menu.js --></div>
+    <div id="pym-menu" class="pym-menu">
+      <!-- Los botones los dibuja menu.js -->
+    </div>
   </main>
 
-  <!-- ================= FOOTER ================= -->
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
   <footer class="pym-footer">
     <span id="pym-estado">Sistema listo.</span>
   </footer>
 
-  <!-- Contenedor de modales -->
+  <!-- ============================================================
+       CONTENEDORES DINÃMICOS
+       ============================================================ -->
   <div id="pym-modales"></div>
-
-  <!-- Contenedor de toasts -->
   <div id="pym-toasts"></div>
 
-  <!-- ================= SCRIPTS ================= -->
+  <!-- ============================================================
+       SCRIPTS (el orden importa)
+       ============================================================ -->
+
+  <!-- 1. Base: config, plataforma, ui -->
   <script src="js/config.js"></script>
   <script src="js/plataforma.js"></script>
   <script src="js/ui.js"></script>
+
+  <!-- 2. Estado global y sistema de ventanas -->
   <script src="js/estado.js"></script>
   <script src="js/ventana.js"></script>
+
+  <!-- 3. Acciones (cada una registra su objeto global ACCION_*) -->
   <script src="js/acciones/cargar-json.js"></script>
   <script src="js/acciones/json-a-csv.js"></script>
   <script src="js/acciones/split.js"></script>
+
+  <!-- 4. MenÃº (depende de las acciones) -->
   <script src="js/menu.js"></script>
+
+  <!-- 5. Arranque -->
   <script src="js/main.js"></script>
+
+  <!-- ============================================================
+       SERVICE WORKER
+       ============================================================ -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker
+          .register('./sw.js')
+          .then((reg) => {
+            console.log('[SW] Registrado. Scope:', reg.scope);
+
+            // Detectar actualizaciÃ³n disponible
+            reg.addEventListener('updatefound', () => {
+              const nuevo = reg.installing;
+              if (!nuevo) return;
+              nuevo.addEventListener('statechange', () => {
+                if (nuevo.state === 'installed' && navigator.serviceWorker.controller) {
+                  console.log('[SW] Nueva versiÃ³n instalada. Activandoâ€¦');
+                  nuevo.postMessage({ type: 'SKIP_WAITING' });
+                }
+              });
+            });
+          })
+          .catch((err) => console.warn('[SW] Error al registrar:', err));
+      });
+
+      // Auto-recarga cuando el SW nuevo toma el control
+      let recargando = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (recargando) return;
+        recargando = true;
+        console.log('[SW] Controlador cambiÃ³ â†’ recargando la app');
+        location.reload();
+      });
+    }
+  </script>
+
 </body>
 </html>
