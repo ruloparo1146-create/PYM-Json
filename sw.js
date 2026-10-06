@@ -1,75 +1,165 @@
-const CACHE_NAME = 'ips-control-v1';
+/* ============================================================
+   PYM JSON - Service Worker
+   Estrategia:
+     - HTML / navegaciÃ³n  â†’ network-first (siempre busca lo nuevo)
+     - Assets (CSS/JS)    â†’ cache-first + revalidaciÃ³n en background
+     - Otros orÃ­genes     â†’ pass-through (no cachea CDN)
+   ============================================================ */
+
+const CACHE_VERSION = 'pym-json-v1';   // â† subÃ­ este nÃºmero cuando cambies archivos
 const APP_ASSETS = [
   './',
   './index.html',
-  './css/style.css',
-  './js/config.js',
-  './js/auth.js',
   './manifest.json',
-  './icon-192.png',
-  './icon-512.png'
+  './css/estilo.css',
+
+  './js/config.js',
+  './js/plataforma.js',
+  './js/ui.js',
+  './js/estado.js',
+  './js/ventana.js',
+  './js/menu.js',
+  './js/main.js',
+
+  './js/acciones/cargar-json.js',
+  './js/acciones/json-a-csv.js',
+  './js/acciones/split.js'
 ];
 
-self.addEventListener('install', event => {
+/* ============================================================
+   INSTALL: precachear assets
+   ============================================================ */
+self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(APP_ASSETS)).catch(err => console.log('Error cacheando:', err))
+    caches.open(CACHE_VERSION).then(async (cache) => {
+      // Cachear uno por uno para que un 404 no rompa todo el install
+      await Promise.all(
+        APP_ASSETS.map(async (url) => {
+          try {
+            await cache.add(url);
+          } catch (e) {
+            console.warn('[SW] No se pudo cachear:', url, e.message);
+          }
+        })
+      );
+    })
   );
   self.skipWaiting();
 });
 
-self.addEventListener('activate', event => {
+/* ============================================================
+   ACTIVATE: borrar caches viejos
+   ============================================================ */
+self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then(keys => Promise.all(
-      keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
-    ))
+    caches.keys().then((keys) =>
+      Promise.all(
+        keys
+          .filter((key) => key !== CACHE_VERSION)
+          .map((key) => {
+            console.log('[SW] Borrando cache viejo:', key);
+            return caches.delete(key);
+          })
+      )
+    )
   );
   self.clients.claim();
 });
 
-self.addEventListener('fetch', event => {
-  if (event.request.method !== 'GET') return;
+/* ============================================================
+   FETCH: estrategia segÃºn tipo de request
+   ============================================================ */
+self.addEventListener('fetch', (event) => {
+  const req = event.request;
 
-  event.respondWith(
-    caches.match(event.request).then(cached => {
-      if (cached) return cached;
+  // Solo GET
+  if (req.method !== 'GET') return;
 
-      return fetch(event.request).then(response => {
-        if (response.ok && new URL(event.request.url).origin === self.location.origin) {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
-        }
-        return response;
-      });
-    })
-  );
+  // Ignorar esquemas raros
+  let url;
+  try {
+    url = new URL(req.url);
+  } catch {
+    return;
+  }
+
+  // No cachear otros orÃ­genes (CDN, APIs, etc.)
+  if (url.origin !== self.location.origin) return;
+
+  // ---- NavegaciÃ³n (HTML): network-first ----
+  if (req.mode === 'navigate' || req.destination === 'document') {
+    event.respondWith(networkFirst(req));
+    return;
+  }
+
+  // ---- Assets: cache-first con revalidaciÃ³n ----
+  event.respondWith(cacheFirst(req));
 });
 
-self.addEventListener('message', event => {
-  if (event.data && event.data.type === 'MOSTRAR_NOTIFICACION') {
-    const { titulo, cuerpo, tag } = event.data;
-    self.registration.showNotification(titulo, {
-      body: cuerpo,
-      icon: 'icon-192.png',
-      badge: 'icon-192.png',
-      tag: tag || 'ips-control',
-      requireInteraction: true,
-      vibrate: [200, 100, 200]
+/* ============================================================
+   Estrategias
+   ============================================================ */
+async function networkFirst(req) {
+  const cache = await caches.open(CACHE_VERSION);
+  try {
+    const red = await fetch(req);
+    // Guardar copia fresca
+    cache.put(req, red.clone());
+    return red;
+  } catch {
+    // Sin red â†’ usar cache; si no estÃ¡, fallback al index
+    const cached = await cache.match(req);
+    if (cached) return cached;
+    const index = await cache.match('./index.html');
+    if (index) return index;
+    return new Response('Sin conexiÃ³n y sin cache disponible.', {
+      status: 503,
+      headers: { 'Content-Type': 'text/plain; charset=utf-8' }
     });
   }
-});
+}
 
-self.addEventListener('notificationclick', event => {
-  event.notification.close();
-  event.waitUntil(
-    clients.matchAll({ type: 'window' }).then(clientList => {
-      for (const client of clientList) {
-        if (client.url.includes('supervivencia') && 'focus' in client) {
-          return client.focus();
-        }
-      }
-      if (clients.openWindow) {
-        return clients.openWindow('./supervivencia.html');
-      }
-    })
-  );
+async function cacheFirst(req) {
+  const cache = await caches.open(CACHE_VERSION);
+  const cached = await cache.match(req);
+  if (cached) {
+    // Revalidar en background (stale-while-revalidate)
+    fetch(req).then((red) => {
+      if (red && red.ok) cache.put(req, red.clone());
+    }).catch(() => {});
+    return cached;
+  }
+  // No estÃ¡ en cache â†’ ir a red y guardar
+  try {
+    const red = await fetch(req);
+    if (red && red.ok) cache.put(req, red.clone());
+    return red;
+  } catch {
+    return new Response('Recurso no disponible offline.', {
+      status: 503,
+      headers: { 'Content-Type': 'text/plain; charset=utf-8' }
+    });
+  }
+}
+
+/* ============================================================
+   MENSAJES desde la app
+   ============================================================ */
+self.addEventListener('message', (event) => {
+  const data = event.data || {};
+
+  // Forzar actualizaciÃ³n de cache
+  if (data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+    return;
+  }
+
+  // Limpiar cache bajo demanda
+  if (data.type === 'LIMPIAR_CACHE') {
+    caches.keys().then((keys) =>
+      Promise.all(keys.map((k) => caches.delete(k)))
+    ).then(() => {
+      event.source?.postMessage({ type: 'CACHE_LIMPIADO' });
+    });
+  }
 });
