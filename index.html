@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+
+<script>
+  // Protección: si no hay sesión → login
+  (function () {
+    const haySesion = !!localStorage.getItem('pym_json_sesion');
+    if (!haySesion) {
+      location.replace('login.html');
+      return;
+    }
+  })();
+</script>
+<button onclick="AUTH.cerrarSesion(); location.replace('login.html');"
+        class="pym-btn-logout" title="Cerrar sesión">Salir</button>  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>PYM JSON - Lector y Conversor</title>
