@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>PYM JSON - Acceso</title>
+
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#4caf50">
+  <link rel="icon" href="icon-192.png">
+
+  <link rel="stylesheet" href="css/estilo.css">
+  <link rel="stylesheet" href="css/login.css">
+</head>
+<body data-plataforma="pc">
+
+  <div class="auth-container">
+    <div class="auth-card">
+      <div class="auth-header">
+        <img src="icon-192.png" alt="PYM JSON" class="auth-logo"
+             onerror="this.style.display='none'">
+        <h1>PYM JSON</h1>
+        <p class="auth-subtitle">Lector y Conversor</p>
+      </div>
+
+      <!-- ============ ESTADO 1: SIN PIN (crear) ============ -->
+      <div id="panel-crear" class="auth-panel hidden">
+        <h2 class="auth-titulo">CreÃ¡ tu PIN</h2>
+        <p class="auth-desc">ElegÃ­ un PIN de 4 a 6 dÃ­gitos. Lo vas a usar para entrar.</p>
+
+        <div class="pin-display" id="pin-display-crear">
+          <span class="pin-dot"></span><span class="pin-dot"></span>
+          <span class="pin-dot"></span><span class="pin-dot"></span>
+        </div>
+
+        <div class="pin-pad">
+          <button class="pin-key" data-key="1">1</button>
+          <button class="pin-key" data-key="2">2</button>
+          <button class="pin-key" data-key="3">3</button>
+          <button class="pin-key" data-key="4">4</button>
+          <button class="pin-key" data-key="5">5</button>
+          <button class="pin-key" data-key="6">6</button>
+          <button class="pin-key" data-key="7">7</button>
+          <button class="pin-key" data-key="8">8</button>
+          <button class="pin-key" data-key="9">9</button>
+          <button class="pin-key pin-key-borrar" data-key="borrar">âŒ«</button>
+          <button class="pin-key" data-key="0">0</button>
+          <button class="pin-key pin-key-ok" data-key="ok">âœ“</button>
+        </div>
+
+        <p id="error-crear" class="error-msg"></p>
+      </div>
+
+      <!-- ============ ESTADO 2: CON PIN (ingresar) ============ -->
+      <div id="panel-login" class="auth-panel hidden">
+        <h2 class="auth-titulo">IngresÃ¡ tu PIN</h2>
+
+        <div class="pin-display" id="pin-display-login">
+          <span class="pin-dot"></span><span class="pin-dot"></span>
+          <span class="pin-dot"></span><span class="pin-dot"></span>
+        </div>
+
+        <div class="pin-pad">
+          <button class="pin-key" data-key="1">1</button>
+          <button class="pin-key" data-key="2">2</button>
+          <button class="pin-key" data-key="3">3</button>
+          <button class="pin-key" data-key="4">4</button>
+          <button class="pin-key" data-key="5">5</button>
+          <button class="pin-key" data-key="6">6</button>
+          <button class="pin-key" data-key="7">7</button>
+          <button class="pin-key" data-key="8">8</button>
+          <button class="pin-key" data-key="9">9</button>
+          <button class="pin-key pin-key-borrar" data-key="borrar">âŒ«</button>
+          <button class="pin-key" data-key="0">0</button>
+          <button class="pin-key pin-key-ok" data-key="ok">âœ“</button>
+        </div>
+
+        <p id="error-login" class="error-msg"></p>
+
+        <button id="btn-olvide" class="link-btn" type="button">
+          OlvidÃ© mi PIN (borra todo)
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>
