@@ -1,9 +1,271 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f9;
-  color: #333;
-  margin: 0;
-  padding: 20px;
+/* ============================================================
+   PYM JSON - Estilo global (verde PYM)
+   ============================================================ */
+
+:root {
+  --pym-fondo:       #d0f0d0;
+  --pym-titulo:      #205020;
+  --pym-verde:       #4caf50;
+  --pym-verde-osc:   #2e7d32;
+  --pym-verde-claro: #e8ffe8;
+  --pym-borde:       #a0c8a0;
+  --pym-editor:      #f8fff8;
+  --pym-sombra:      0 2px 8px rgba(0,0,0,0.15);
+  --pym-radio:       8px;
+  --pym-fuente:      'Segoe UI', Roboto, system-ui, sans-serif;
 }
-h1 { color: #2c3e50; }
-pre { background: #eee; padding: 10px; border-radius: 5px; overflow-x: auto; }
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0; padding: 0;
+  min-height: 100vh;
+  font-family: var(--pym-fuente);
+  background: var(--pym-fondo);
+  color: var(--pym-titulo);
+}
+
+/* ================= HEADER ================= */
+.pym-header {
+  background: linear-gradient(180deg, #4caf50 0%, #2e7d32 100%);
+  color: #fff;
+  padding: 10px 16px;
+  box-shadow: var(--pym-sombra);
+  position: sticky; top: 0; z-index: 100;
+}
+.pym-header-fila {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px;
+}
+.pym-header-fila + .pym-header-fila { margin-top: 4px; }
+
+.pym-titulo {
+  margin: 0; font-size: 1.4rem; letter-spacing: 2px;
+  font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.25);
+}
+.pym-reloj { text-align: right; font-variant-numeric: tabular-nums; }
+.pym-reloj #pym-fecha { font-size: 0.8rem; opacity: 0.9; }
+.pym-reloj #pym-hora  { font-size: 1.1rem; font-weight: 600; }
+
+.pym-visitas { opacity: 0.95; font-size: 0.85rem; }
+
+/* ================= MAIN / MENÃš ================= */
+.pym-main {
+  padding: 16px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.pym-menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.pym-btn {
+  background: #fff;
+  color: var(--pym-titulo);
+  border: 2px solid var(--pym-borde);
+  border-radius: var(--pym-radio);
+  padding: 14px 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+.pym-btn:hover:not(:disabled) {
+  background: var(--pym-verde-claro);
+  border-color: var(--pym-verde);
+  transform: translateY(-1px);
+  box-shadow: var(--pym-sombra);
+}
+.pym-btn:active:not(:disabled) { transform: translateY(0); }
+.pym-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.pym-btn .num {
+  display: inline-block;
+  background: var(--pym-verde);
+  color: #fff;
+  border-radius: 50%;
+  width: 22px; height: 22px;
+  line-height: 22px; text-align: center;
+  font-size: 0.75rem;
+  margin-right: 8px;
+  font-weight: 700;
+}
+
+/* ================= FOOTER ================= */
+.pym-footer {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: #fff;
+  border-top: 1px solid var(--pym-borde);
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  color: var(--pym-titulo);
+  text-align: center;
+  z-index: 90;
+}
+body { padding-bottom: 48px; }
+
+/* ================= MODALES ================= */
+.pym-modal-fondo {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.35);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200;
+  animation: pymFadeIn 0.15s ease;
+}
+@keyframes pymFadeIn { from { opacity: 0 } to { opacity: 1 } }
+
+.pym-modal {
+  background: var(--pym-fondo);
+  border-radius: var(--pym-radio);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  width: 90vw; max-width: 720px;
+  max-height: 90vh;
+  display: flex; flex-direction: column;
+  animation: pymSlideUp 0.2s ease;
+}
+@keyframes pymSlideUp {
+  from { transform: translateY(20px); opacity: 0 }
+  to   { transform: translateY(0);    opacity: 1 }
+}
+
+.pym-modal-header {
+  background: linear-gradient(180deg, #4caf50 0%, #2e7d32 100%);
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: var(--pym-radio) var(--pym-radio) 0 0;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.pym-modal-header h2 { margin: 0; font-size: 1.05rem; letter-spacing: 1px; }
+.pym-modal-cerrar {
+  background: transparent; border: none; color: #fff;
+  font-size: 1.5rem; cursor: pointer; line-height: 1;
+  padding: 0 6px;
+}
+.pym-modal-cerrar:hover { opacity: 0.8; }
+
+.pym-modal-cuerpo {
+  padding: 16px;
+  overflow: auto;
+  flex: 1;
+}
+.pym-modal-pie {
+  padding: 10px 16px;
+  border-top: 1px solid var(--pym-borde);
+  display: flex; gap: 8px; justify-content: flex-end;
+  background: rgba(255,255,255,0.5);
+  border-radius: 0 0 var(--pym-radio) var(--pym-radio);
+}
+
+/* Botones dentro de modal */
+.pym-btn-accion {
+  background: var(--pym-verde);
+  color: #fff; border: none; border-radius: 6px;
+  padding: 10px 18px; font-size: 0.95rem; font-weight: 600;
+  cursor: pointer;
+}
+.pym-btn-accion:hover { background: var(--pym-verde-osc); }
+.pym-btn-accion.secundario {
+  background: #fff; color: var(--pym-titulo);
+  border: 2px solid var(--pym-borde);
+}
+.pym-btn-accion.secundario:hover { background: var(--pym-verde-claro); }
+
+/* Formularios dentro de modal */
+.pym-campo { margin-bottom: 12px; }
+.pym-campo label {
+  display: block; font-size: 0.85rem; font-weight: 600;
+  margin-bottom: 4px; color: var(--pym-titulo);
+}
+.pym-campo input[type="text"],
+.pym-campo input[type="number"],
+.pym-campo select,
+.pym-campo textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--pym-borde);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  background: #fff;
+  color: var(--pym-titulo);
+}
+.pym-campo textarea { resize: vertical; min-height: 80px; font-family: monospace; }
+
+/* Tablas de preview */
+.pym-tabla-wrap { overflow: auto; max-height: 300px; border: 1px solid var(--pym-borde); border-radius: 6px; }
+table.pym-tabla {
+  border-collapse: collapse; width: 100%; font-size: 0.85rem;
+}
+table.pym-tabla th {
+  background: var(--pym-verde-claro);
+  color: var(--pym-titulo);
+  padding: 6px 10px; text-align: left;
+  border-bottom: 2px solid var(--pym-borde);
+  position: sticky; top: 0;
+}
+table.pym-tabla td {
+  padding: 5px 10px;
+  border-bottom: 1px solid #e0f0e0;
+  white-space: nowrap;
+}
+table.pym-tabla tr:nth-child(even) td { background: #f0fff0; }
+
+/* Progreso */
+.pym-progreso {
+  width: 100%; height: 18px;
+  background: #fff;
+  border: 1px solid var(--pym-borde);
+  border-radius: 9px;
+  overflow: hidden;
+}
+.pym-progreso > div {
+  height: 100%;
+  background: linear-gradient(90deg, #4caf50, #2e7d32);
+  width: 0%;
+  transition: width 0.2s ease;
+}
+
+/* Estado dentro de modal */
+.pym-estado {
+  font-size: 0.85rem; padding: 8px;
+  background: rgba(255,255,255,0.6);
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+/* ================= TOASTS ================= */
+#pym-toasts {
+  position: fixed; bottom: 60px; right: 20px;
+  z-index: 500; display: flex; flex-direction: column; gap: 8px;
+}
+.pym-toast {
+  background: var(--pym-verde-osc);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  box-shadow: var(--pym-sombra);
+  animation: pymSlideIn 0.2s ease;
+  max-width: 320px;
+}
+.pym-toast.error { background: #c62828; }
+.pym-toast.info  { background: #1565c0; }
+@keyframes pymSlideIn {
+  from { transform: translateX(100%); opacity: 0 }
+  to   { transform: translateX(0);    opacity: 1 }
+}
+
+/* ================= MÃ“VIL ================= */
+body[data-plataforma="movil"] .pym-menu {
+  grid-template-columns: repeat(2, 1fr);
+}
+body[data-plataforma="movil"] .pym-titulo { font-size: 1.1rem; }
+body[data-plataforma="movil"] .pym-main { padding: 10px; }
+body[data-plataforma="movil"] .pym-btn { font-size: 0.85rem; padding: 12px 10px; }
+body[data-plataforma="movil"] .pym-modal { width: 96vw; max-height: 94vh; }
+body[data-plataforma="movil"] .pym-modal-header h2 { font-size: 0.95rem; }
