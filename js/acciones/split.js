@@ -1,5 +1,5 @@
 /* ============================================================
-   AcciÃ³n: Cortar JSON en partes
+   Acción: Cortar JSON en partes
    ============================================================ */
 
 const ACCION_SPLIT = (() => {
@@ -15,7 +15,7 @@ const ACCION_SPLIT = (() => {
 
   async function ejecutar() {
     if (!ESTADO.hayJSON()) {
-      UI.toast('Primero cargÃ¡ un JSON', 'error');
+      UI.toast('Primero cargá un JSON', 'error');
       return;
     }
 
@@ -29,7 +29,7 @@ const ACCION_SPLIT = (() => {
     }
 
     const opcionesArray = esArray
-      ? '<option value="">(raÃ­z)</option>'
+      ? '<option value="">(raíz)</option>'
       : arrays.map(a => `<option value="${UI.esc(a)}">${UI.esc(a)}</option>`).join('');
 
     const base = (ESTADO.datos.rutaJSON || 'salida').replace(/\.json$/i, '');
@@ -43,7 +43,7 @@ const ACCION_SPLIT = (() => {
         <label>Modo de corte</label>
         <select id="sp-modo">
           <option value="elems">Por cantidad de elementos</option>
-          <option value="peso">Por peso mÃ¡ximo (KB)</option>
+          <option value="peso">Por peso máximo (KB)</option>
           <option value="npartes">En N partes iguales</option>
         </select>
       </div>
@@ -52,7 +52,7 @@ const ACCION_SPLIT = (() => {
         <input type="number" id="sp-elems" value="100" min="1">
       </div>
       <div class="pym-campo">
-        <label>Peso mÃ¡ximo por parte (KB)</label>
+        <label>Peso máximo por parte (KB)</label>
         <input type="number" id="sp-peso" value="500" min="1">
       </div>
       <div class="pym-campo">
@@ -63,7 +63,7 @@ const ACCION_SPLIT = (() => {
         <label>Prefijo de los archivos</label>
         <input type="text" id="sp-prefijo" value="${UI.esc(base)}">
       </div>
-      <div class="pym-estado" id="sp-info">Listo. ConfigurÃ¡ y pulsÃ¡ Procesar.</div>
+      <div class="pym-estado" id="sp-info">Listo. Configurá y pulsá Procesar.</div>
     `;
 
     VENTANA.abrir({
@@ -84,7 +84,7 @@ const ACCION_SPLIT = (() => {
             let arr = obj;
             if (!Array.isArray(arr)) arr = obj[arraySel];
             if (!Array.isArray(arr) || arr.length === 0) {
-              info.textContent = 'Array vacÃ­o o invÃ¡lido.';
+              info.textContent = 'Array vacío o inválido.';
               return;
             }
 
@@ -126,7 +126,7 @@ const ACCION_SPLIT = (() => {
               } else {
                 contenido = JSON.stringify({ [arraySel]: partes[i] }, null, 2);
               }
-              // pequeÃ±o delay para que el navegador no bloquee
+              // pequeño delay para que el navegador no bloquee
               await new Promise(r => setTimeout(r, 30));
               UI.descargar(nombre, contenido, 'application/json');
             }
