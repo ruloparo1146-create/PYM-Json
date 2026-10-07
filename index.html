@@ -6,8 +6,8 @@
   <title>PYM JSON - Lector y Conversor</title>
 
   <!-- ============================================================
-       PROTECCIÃ“N DE RUTA (antes de todo)
-       Si no hay sesiÃ³n â†’ redirige a login.html
+       PROTECCION DE RUTA (antes de todo)
+       Si no hay sesion -> redirige a login.html
        ============================================================ -->
   <script>
     (function () {
@@ -17,7 +17,6 @@
           location.replace('login.html');
         }
       } catch (e) {
-        // localStorage no disponible â†’ mandamos a login por las dudas
         location.replace('login.html');
       }
     })();
@@ -52,14 +51,14 @@
       <small id="pym-info-archivo" class="pym-visitas">
         JSON: (ninguno) &nbsp;|&nbsp; Tipo: -
       </small>
-      <button id="pym-btn-salir" class="pym-btn-logout" title="Cerrar sesiÃ³n">
+      <button id="pym-btn-salir" class="pym-btn-logout" title="Cerrar sesion">
         Salir
       </button>
     </div>
   </header>
 
   <!-- ============================================================
-       MENÃš PRINCIPAL
+       MENU PRINCIPAL
        ============================================================ -->
   <main class="pym-main">
     <div id="pym-menu" class="pym-menu">
@@ -75,7 +74,7 @@
   </footer>
 
   <!-- ============================================================
-       CONTENEDORES DINÃMICOS
+       CONTENEDORES DINAMICOS
        ============================================================ -->
   <div id="pym-modales"></div>
   <div id="pym-toasts"></div>
@@ -84,7 +83,7 @@
        SCRIPTS (el orden importa)
        ============================================================ -->
 
-  <!-- 1. AutenticaciÃ³n (debe ir primero) -->
+  <!-- 1. Autenticacion (debe ir primero) -->
   <script src="js/auth.js"></script>
 
   <!-- 2. Base: config, plataforma, ui -->
@@ -96,23 +95,23 @@
   <script src="js/estado.js"></script>
   <script src="js/ventana.js"></script>
 
-  <!-- 4. Acciones (cada una registra su objeto global ACCION_*) -->
+  <!-- 4. Acciones -->
   <script src="js/acciones/cargar-json.js"></script>
   <script src="js/acciones/json-a-csv.js"></script>
   <script src="js/acciones/split.js"></script>
 
-  <!-- 5. MenÃº (depende de las acciones) -->
+  <!-- 5. Menu (depende de las acciones) -->
   <script src="js/menu.js"></script>
 
   <!-- 6. Arranque -->
   <script src="js/main.js"></script>
 
   <!-- ============================================================
-       BOTÃ“N SALIR (logout)
+       BOTON SALIR (logout)
        ============================================================ -->
   <script>
     document.getElementById('pym-btn-salir')?.addEventListener('click', () => {
-      if (confirm('Â¿Cerrar sesiÃ³n?')) {
+      if (confirm('Cerrar sesion?')) {
         AUTH.cerrarSesion();
         location.replace('login.html');
       }
@@ -130,13 +129,12 @@
           .then((reg) => {
             console.log('[SW] Registrado. Scope:', reg.scope);
 
-            // Detectar actualizaciÃ³n disponible
             reg.addEventListener('updatefound', () => {
               const nuevo = reg.installing;
               if (!nuevo) return;
               nuevo.addEventListener('statechange', () => {
                 if (nuevo.state === 'installed' && navigator.serviceWorker.controller) {
-                  console.log('[SW] Nueva versiÃ³n instalada. Activandoâ€¦');
+                  console.log('[SW] Nueva version instalada. Activando...');
                   nuevo.postMessage({ type: 'SKIP_WAITING' });
                 }
               });
@@ -145,12 +143,11 @@
           .catch((err) => console.warn('[SW] Error al registrar:', err));
       });
 
-      // Auto-recarga cuando el SW nuevo toma el control
       let recargando = false;
       navigator.serviceWorker.addEventListener('controllerchange', () => {
         if (recargando) return;
         recargando = true;
-        console.log('[SW] Controlador cambiÃ³ â†’ recargando la app');
+        console.log('[SW] Controlador cambio -> recargando la app');
         location.reload();
       });
     }
