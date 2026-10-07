@@ -1,67 +1,69 @@
 /* ============================================================
    PYM_MENU - Dibuja y gestiona los botones del menu principal
+
    Estados:
-     - activo: true  -> funciona, siempre habilitado
-     - requiereJSON  -> se habilita solo si hay JSON cargado
-     - proximamente  -> deshabilitado hasta programarlo
+     - programado: true  -> tiene .js, funciona
+     - programado: false -> sin .js todavia, muestra "en migracion"
+     - requiereJSON      -> se deshabilita si no hay JSON cargado
+                            (solo aplica a los programados)
    ============================================================ */
 
 const MENU = (() => {
 
   const BOTONES = [
-    // ---- Fila 1: JSON ----
+    // ---- Fila 1 ----
     { num:  1, id: 'cargar-json',  texto: 'Cargar JSON',
-      activo: true,  requiereJSON: false },
+      programado: true,  requiereJSON: false },
 
     { num:  2, id: 'crear-db',     texto: 'Crear DB',
-      activo: false, requiereJSON: true },
+      programado: false, requiereJSON: true },   // <- usa JSON cargado
 
     { num:  3, id: 'ver-db',       texto: 'Ver DB',
-      activo: false, requiereJSON: true },
+      programado: false, requiereJSON: true },
 
     { num:  4, id: 'exportar',     texto: 'Exportar',
-      activo: false, requiereJSON: true },
+      programado: false, requiereJSON: true },
 
     { num: 10, id: 'split',        texto: 'Cortar JSON',
-      activo: true,  requiereJSON: false },   // puede abrir JSON con picker
+      programado: true,  requiereJSON: false },  // abre picker si no hay JSON
 
-    // ---- Fila 2: DB externa y utilidades ----
+    // ---- Fila 2 ----
     { num:  5, id: 'abrir-sqlite', texto: 'Abrir SQLite',
-      activo: false, requiereJSON: false },
+      programado: false, requiereJSON: false },
 
     { num:  7, id: 'resumen-db',   texto: 'Resumen DB',
-      activo: false, requiereJSON: false },
+      programado: false, requiereJSON: false },
 
     { num:  8, id: 'arbol-db',     texto: 'Arbol DB',
-      activo: false, requiereJSON: false },
+      programado: false, requiereJSON: false },
 
     { num:  9, id: 'diagrama-er',  texto: 'Diagrama ER',
-      activo: false, requiereJSON: false },
+      programado: false, requiereJSON: false },
 
     { num: 16, id: 'csv-a-sqlite', texto: 'CSV -> SQLite',
-      activo: false, requiereJSON: false },
+      programado: false, requiereJSON: false },
 
-    // ---- Fila 3: conversiones ----
+    // ---- Fila 3 ----
     { num:  6, id: 'explorar',     texto: 'Explorar JSON',
-      activo: false, requiereJSON: false },   // puede abrir JSON con picker
+      programado: false, requiereJSON: false },
 
     { num: 12, id: 'json-a-csv',   texto: 'JSON -> CSV',
-      activo: true,  requiereJSON: false },   // puede abrir JSON con picker
+      programado: true,  requiereJSON: false },  // abre picker si no hay JSON
 
     { num: 13, id: 'json-a-xlsx',  texto: 'JSON -> XLSX',
-      activo: false, requiereJSON: false },
+      programado: false, requiereJSON: false },
 
     { num: 14, id: 'csv-a-rtf',    texto: 'CSV -> RTF',
-      activo: false, requiereJSON: false },
+      programado: false, requiereJSON: false },
 
     { num: 15, id: 'xlsx-a-rtf',   texto: 'XLSX -> RTF',
-      activo: false, requiereJSON: false },
+      programado: false, requiereJSON: false },
 
     { num: 17, id: 'txt-utf8',     texto: 'TXT -> UTF-8',
-      activo: false, requiereJSON: false }
+      programado: false, requiereJSON: false }
   ];
 
-  // Mapa id -> funcion. Se va llenando a medida que programamos modulos.
+  // Mapa id -> funcion. Solo los programados.
   const ACCIONES = {
     'cargar-json': () => ACCION_CARGAR_JSON.ejecutar(),
     'json-a-csv':  () => ACCION_JSON_A_CSV.ejecutar(),
@@ -83,31 +85,35 @@ const MENU = (() => {
         '<span class="num">' + b.num + '</span>' +
         UI.esc(b.texto);
 
-      // --- Determinar si se deshabilita ---
+      // --- Estado del boton ---
       let deshabilitado = false;
       let tooltip = '';
 
-      if (!b.activo) {
-        // Modulo no programado todavia
-        deshabilitado = true;
-        tooltip = 'Proximamente';
+      if (!b.programado) {
+        // Modulo aun no migrado: queda clickeable pero avisa
+        // (no lo deshabilitamos para que el usuario pueda saber que existe)
+        deshabilitado = false;
+        tooltip = 'En migracion: proximamente disponible';
+        btn.classList.add('pym-btn-pendiente');
       } else if (b.requiereJSON && !hayJSON) {
-        // Programado pero depende de tener un JSON cargado
+        // Programado pero necesita un JSON cargado
         deshabilitado = true;
         tooltip = 'Primero carga un JSON';
+      } else {
+        tooltip = 'Ejecutar: ' + b.texto;
       }
 
       btn.disabled = deshabilitado;
+      btn.title = tooltip;
 
-      // Tooltip (un poco mas informativo)
-      if (deshabilitado) {
-        btn.title = tooltip;
-      } else {
-        btn.title = 'Ejecutar: ' + b.texto;
-      }
-
-      // Click handler
+      // --- Click handler ---
       btn.addEventListener('click', async () => {
+        // Si no esta programado, avisamos
+        if (!b.programado) {
+          UI.toast('Modulo "' + b.texto + '" en migracion. Proximamente.', 'info');
+          return;
+        }
+
         const fn = ACCIONES[b.id];
         if (typeof fn === 'function') {
           try {
