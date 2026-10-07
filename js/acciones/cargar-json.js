@@ -1,10 +1,10 @@
 /* ============================================================
-   AcciÃ³n: Cargar JSON
+   Acción: Cargar JSON
    ============================================================ */
 
 const ACCION_CARGAR_JSON = (() => {
 
-  // Clasificador bÃ¡sico (mÃ¡s adelante lo ampliamos como PYM_JSON_TIPOS)
+  // Clasificador básico (más adelante lo ampliamos como PYM_JSON_TIPOS)
   function clasificar(objeto) {
     if (Array.isArray(objeto)) {
       const n = objeto.length;
@@ -15,11 +15,11 @@ const ACCION_CARGAR_JSON = (() => {
           descripcion: `${n} elementos, ${claves.length} campos por objeto`
         };
       }
-      return { nombre: 'Array genÃ©rico', descripcion: `${n} elementos` };
+      return { nombre: 'Array genérico', descripcion: `${n} elementos` };
     }
     if (objeto && typeof objeto === 'object') {
       const claves = Object.keys(objeto);
-      // HeurÃ­sticas rÃ¡pidas
+      // Heurísticas rápidas
       if (claves.includes('name') && claves.includes('short_name')) {
         return { nombre: 'Manifest PWA', descripcion: 'Manifest de app web' };
       }
@@ -27,14 +27,14 @@ const ACCION_CARGAR_JSON = (() => {
         return { nombre: 'Package npm', descripcion: 'Manifiesto de proyecto Node' };
       }
       if (claves.includes('type') && claves.includes('features')) {
-        return { nombre: 'GeoJSON', descripcion: 'Estructura geogrÃ¡fica' };
+        return { nombre: 'GeoJSON', descripcion: 'Estructura geográfica' };
       }
       if (claves.includes('paths') && claves.includes('info')) {
-        return { nombre: 'OpenAPI / Swagger', descripcion: 'DefiniciÃ³n de API' };
+        return { nombre: 'OpenAPI / Swagger', descripcion: 'Definición de API' };
       }
       return {
-        nombre: 'Objeto genÃ©rico',
-        descripcion: `${claves.length} claves en la raÃ­z`
+        nombre: 'Objeto genérico',
+        descripcion: `${claves.length} claves en la raíz`
       };
     }
     return { nombre: 'Escalar', descripcion: 'JSON sin estructura' };
@@ -49,7 +49,7 @@ const ACCION_CARGAR_JSON = (() => {
       texto = await file.text();
       objeto = JSON.parse(texto);
     } catch (e) {
-      UI.toast('JSON invÃ¡lido: ' + e.message, 'error');
+      UI.toast('JSON inválido: ' + e.message, 'error');
       return;
     }
 
@@ -66,7 +66,7 @@ const ACCION_CARGAR_JSON = (() => {
 
     CFG.setUltimoJSON(file.name);
 
-    // Actualizar botones del menÃº (los que dependen de tener JSON)
+    // Actualizar botones del menú (los que dependen de tener JSON)
     MENU.refrescar();
   }
 
