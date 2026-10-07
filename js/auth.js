@@ -1,5 +1,5 @@
 /* ============================================================
-   PYM_AUTH - AutenticaciÃ³n por PIN local
+   PYM_AUTH - Autenticación por PIN local
    Guarda un hash SHA-256 del PIN en localStorage.
    ============================================================ */
 
@@ -20,7 +20,7 @@ const AUTH = (() => {
       .join('');
   }
 
-  // ---- Â¿Hay PIN configurado? ----
+  // ---- ¿Hay PIN configurado? ----
   function hayPIN() {
     return !!localStorage.getItem(KEY_PIN);
   }
@@ -28,7 +28,7 @@ const AUTH = (() => {
   // ---- Crear PIN (primera vez) ----
   async function crearPIN(pin) {
     if (!/^\d{4,6}$/.test(pin)) {
-      throw new Error('El PIN debe tener entre 4 y 6 dÃ­gitos.');
+      throw new Error('El PIN debe tener entre 4 y 6 dígitos.');
     }
     const h = await hash(pin);
     localStorage.setItem(KEY_PIN, h);
@@ -41,7 +41,7 @@ const AUTH = (() => {
     // Chequear bloqueo
     const bloq = bloqueoRestante();
     if (bloq > 0) {
-      throw new Error(`Bloqueado. EsperÃ¡ ${Math.ceil(bloq / 1000)} segundos.`);
+      throw new Error(`Bloqueado. Esperá ${Math.ceil(bloq / 1000)} segundos.`);
     }
 
     const guardado = localStorage.getItem(KEY_PIN);
@@ -80,7 +80,7 @@ const AUTH = (() => {
     return BLOQUEO_MS - transcurrido;
   }
 
-  // ---- SesiÃ³n activa ----
+  // ---- Sesión activa ----
   function haySesion() {
     return !!localStorage.getItem(KEY_SESION);
   }
