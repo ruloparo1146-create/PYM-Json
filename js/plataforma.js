@@ -1,5 +1,5 @@
 /* ============================================================
-   PYM_PLATAFORMA - Detecta PC / MÃ³vil / Tablet
+   PYM_PLATAFORMA - Detecta PC / Móvil / Tablet
    Y aplica el atributo data-plataforma al <body>
    ============================================================ */
 
@@ -11,7 +11,7 @@ const PLATAFORMA = (() => {
     const ancho = window.innerWidth;
     const touch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
 
-    // Si el UA dice mÃ³vil, o la pantalla es chica y hay touch â†’ mÃ³vil
+    // Si el UA dice móvil, o la pantalla es chica y hay touch â†’ móvil
     if (esMovilUA) return 'movil';
     if (ancho < 720 && touch) return 'movil';
     if (ancho < 480) return 'movil';
