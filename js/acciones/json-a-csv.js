@@ -1,5 +1,5 @@
 /* ============================================================
-   AcciÃ³n: JSON â†’ CSV
+   Acción: JSON â†’ CSV
    ============================================================ */
 
 const ACCION_JSON_A_CSV = (() => {
@@ -22,16 +22,16 @@ const ACCION_JSON_A_CSV = (() => {
   function generarCSV(objeto, arrayNombre, sep, conEncab) {
     let arr = objeto;
     if (!Array.isArray(arr)) {
-      if (!arrayNombre) throw new Error('La raÃ­z es un objeto. ElegÃ­ un array interno.');
+      if (!arrayNombre) throw new Error('La raíz es un objeto. Elegí un array interno.');
       arr = objeto[arrayNombre];
       if (!Array.isArray(arr)) throw new Error(`"${arrayNombre}" no es un array.`);
     }
-    if (arr.length === 0) throw new Error('Array vacÃ­o.');
+    if (arr.length === 0) throw new Error('Array vacío.');
     if (typeof arr[0] !== 'object' || arr[0] === null) {
       throw new Error('Los elementos del array no son objetos.');
     }
 
-    // Columnas = uniÃ³n de claves de todos los objetos
+    // Columnas = unión de claves de todos los objetos
     const cols = [];
     const vistas = new Set();
     for (const el of arr) {
@@ -62,7 +62,7 @@ const ACCION_JSON_A_CSV = (() => {
 
   async function ejecutar() {
     if (!ESTADO.hayJSON()) {
-      UI.toast('Primero cargÃ¡ un JSON', 'error');
+      UI.toast('Primero cargá un JSON', 'error');
       return;
     }
 
@@ -71,12 +71,12 @@ const ACCION_JSON_A_CSV = (() => {
     const arrays = esArray ? [] : arraysInternos(obj);
 
     if (!esArray && arrays.length === 0) {
-      UI.toast('La raÃ­z no es array y no hay arrays internos', 'error');
+      UI.toast('La raíz no es array y no hay arrays internos', 'error');
       return;
     }
 
     const opcionesArray = esArray
-      ? '<option value="">(raÃ­z)</option>'
+      ? '<option value="">(raíz)</option>'
       : arrays.map(a => `<option value="${UI.esc(a)}">${UI.esc(a)}</option>`).join('');
 
     const html = `
