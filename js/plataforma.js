@@ -1,6 +1,6 @@
 /* ============================================================
-   PYM_PLATAFORMA - Detecta PC / Móvil / Tablet
-   Y aplica el atributo data-plataforma al <body>
+   PYM_PLATAFORMA - Detecta PC / Movil / Tablet
+   Aplica el atributo data-plataforma al <body>
    ============================================================ */
 
 const PLATAFORMA = (() => {
@@ -11,7 +11,6 @@ const PLATAFORMA = (() => {
     const ancho = window.innerWidth;
     const touch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
 
-    // Si el UA dice móvil, o la pantalla es chica y hay touch â†’ móvil
     if (esMovilUA) return 'movil';
     if (ancho < 720 && touch) return 'movil';
     if (ancho < 480) return 'movil';
@@ -19,18 +18,33 @@ const PLATAFORMA = (() => {
   }
 
   function aplicar() {
+    // Blindaje: si no hay body todavia, no hacemos nada
+    if (!document.body) return null;
+
     const p = detectar();
     document.body.setAttribute('data-plataforma', p);
-    CFG.set('plataforma', p);
+
+    // Guardar en config solo si CFG esta disponible
+    try {
+      if (typeof CFG !== 'undefined' && CFG.set) CFG.set('plataforma', p);
+    } catch (e) { /* silencioso */ }
+
     return p;
   }
 
   function esMovil() {
+    if (!document.body) return false;
     return document.body.getAttribute('data-plataforma') === 'movil';
   }
 
   function init() {
-    aplicar();
+    // Si el DOM ya esta listo, aplicar ahora
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', aplicar);
+    } else {
+      aplicar();
+    }
+
     // Reevaluar al rotar / redimensionar (con debounce)
     let t = null;
     window.addEventListener('resize', () => {
