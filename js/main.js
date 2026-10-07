@@ -8,17 +8,17 @@
   // 1) Config
   CFG.cargar();
 
-  // 2) Plataforma (PC / MÃ³vil)
+  // 2) Plataforma (PC / Móvil)
   PLATAFORMA.init();
 
   // 3) Reloj
   UI.iniciarReloj();
 
-  // 4) MenÃº
+  // 4) Menú
   MENU.dibujar();
 
   // 5) Estado inicial
-  UI.estado('Sistema listo. CargÃ¡ un JSON para comenzar.');
+  UI.estado('Sistema listo. Cargá un JSON para comenzar.');
 
   // 6) Aviso de plataforma
   const p = CFG.get('plataforma');
