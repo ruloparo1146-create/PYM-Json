@@ -91,7 +91,7 @@ const VENTANA = (() => {
     return api;
   }
 
-  // Pregunta rÃ¡pida tipo alert
+  // Pregunta rápida tipo alert
   function alerta(titulo, mensaje) {
     return abrir({
       titulo,
@@ -101,7 +101,7 @@ const VENTANA = (() => {
     });
   }
 
-  // ConfirmaciÃ³n con promesa
+  // Confirmación con promesa
   function confirmar(titulo, mensaje) {
     return new Promise((resolve) => {
       abrir({
