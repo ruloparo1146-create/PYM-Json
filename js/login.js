@@ -1,5 +1,5 @@
 /* ============================================================
-   PYM_LOGIN - LÃ³gica de la pantalla de PIN
+   PYM_LOGIN - Lógica de la pantalla de PIN
    ============================================================ */
 
 (function () {
@@ -62,7 +62,7 @@
       btn.addEventListener('click', () => onTecla(btn.dataset.key, 'login'));
     });
 
-    // Teclado fÃ­sico (0-9, Backspace, Enter)
+    // Teclado físico (0-9, Backspace, Enter)
     document.addEventListener('keydown', (e) => {
       const panel = modoCrear ? 'crear' : 'login';
       if (/^[0-9]$/.test(e.key))        onTecla(e.key, panel);
@@ -70,10 +70,10 @@
       else if (e.key === 'Enter')       onTecla('ok', panel);
     });
 
-    // BotÃ³n "olvidÃ© mi PIN"
+    // Botón "olvidé mi PIN"
     if (btnOlvide) {
       btnOlvide.addEventListener('click', () => {
-        if (confirm('Esto borra el PIN guardado y todos los datos locales.\n\nÂ¿Continuar?')) {
+        if (confirm('Esto borra el PIN guardado y todos los datos locales.\n\n¿Continuar?')) {
           AUTH.borrarPIN();
           location.reload();
         }
@@ -95,7 +95,7 @@
 
     if (key === 'ok') {
       if (pinIngresado.length < 4) {
-        errEl.textContent = 'El PIN debe tener al menos 4 dÃ­gitos.';
+        errEl.textContent = 'El PIN debe tener al menos 4 dígitos.';
         marcarError(dots);
         return;
       }
@@ -107,7 +107,7 @@
       return;
     }
 
-    // DÃ­gito
+    // Dígito
     if (pinIngresado.length >= 6) return;
     pinIngresado += key;
     pintarDots(dots, pinIngresado.length);
@@ -119,17 +119,17 @@
   // ==================== CREAR PIN (2 pasos) ====================
   async function procesarCrear() {
     if (!pinTemporal) {
-      // Paso 1: guardar el primer PIN, pedir confirmaciÃ³n
+      // Paso 1: guardar el primer PIN, pedir confirmación
       pinTemporal = pinIngresado;
       pinIngresado = '';
       pintarDots(dotsCrear, 0);
-      errorCrear.textContent = 'RepetÃ­ el PIN para confirmar.';
+      errorCrear.textContent = 'Repetí el PIN para confirmar.';
       errorCrear.style.color = '#1565c0';
       return;
     }
     // Paso 2: verificar coincidencia
     if (pinTemporal !== pinIngresado) {
-      errorCrear.textContent = 'Los PIN no coinciden. EmpezÃ¡ de nuevo.';
+      errorCrear.textContent = 'Los PIN no coinciden. Empezá de nuevo.';
       errorCrear.style.color = '#c62828';
       marcarError(dotsCrear);
       pinTemporal = '';
