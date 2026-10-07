@@ -1,10 +1,10 @@
 /* ============================================================
-   PYM_MENU - Dibuja y gestiona los botones del menÃº
+   PYM_MENU - Dibuja y gestiona los botones del menú
    ============================================================ */
 
 const MENU = (() => {
 
-  // DefiniciÃ³n de los botones
+  // Definición de los botones
   const BOTONES = [
     { id: 'cargar-json',   num:  1, texto: 'Cargar JSON',         siempre: true },
     { id: 'crear-db',      num:  2, texto: 'Crear DB',            requiereJSON: true, pendiente: true },
@@ -13,7 +13,7 @@ const MENU = (() => {
     { id: 'split',         num: 10, texto: 'Cortar JSON',         requiereJSON: true },
     { id: 'abrir-sqlite',  num:  5, texto: 'Abrir SQLite',        pendiente: true },
     { id: 'resumen-db',    num:  7, texto: 'Resumen DB',          pendiente: true },
-    { id: 'arbol-db',      num:  8, texto: 'Ãrbol DB',            pendiente: true },
+    { id: 'arbol-db',      num:  8, texto: 'Árbol DB',            pendiente: true },
     { id: 'diagrama-er',   num:  9, texto: 'Diagrama ER',         pendiente: true },
     { id: 'csv-a-sqlite',  num: 16, texto: 'CSV â†’ SQLite',        pendiente: true },
     { id: 'explorar',      num:  6, texto: 'Explorar JSON',       requiereJSON: true, pendiente: true },
@@ -23,12 +23,12 @@ const MENU = (() => {
     { id: 'xlsx-a-rtf',    num: 15, texto: 'XLSX â†’ RTF',          pendiente: true }
   ];
 
-  // Mapa id â†’ funciÃ³n ejecutar
+  // Mapa id â†’ función ejecutar
   const ACCIONES = {
     'cargar-json':  () => ACCION_CARGAR_JSON.ejecutar(),
     'json-a-csv':   () => ACCION_JSON_A_CSV.ejecutar(),
     'split':        () => ACCION_SPLIT.ejecutar()
-    // los demÃ¡s se agregan cuando se migren
+    // los demás se agregan cuando se migren
   };
 
   function dibujar() {
@@ -45,7 +45,7 @@ const MENU = (() => {
       const requiere = b.requiereJSON && !hayJSON;
       const pendiente = b.pendiente;
       btn.disabled = requiere || pendiente;
-      if (pendiente) btn.title = 'PrÃ³ximamente';
+      if (pendiente) btn.title = 'Próximamente';
 
       btn.addEventListener('click', async () => {
         const fn = ACCIONES[b.id];
@@ -53,7 +53,7 @@ const MENU = (() => {
           try { await fn(); }
           catch (e) { UI.toast('Error: ' + e.message, 'error'); console.error(e); }
         } else {
-          UI.toast('MÃ³dulo no migrado todavÃ­a', 'info');
+          UI.toast('Módulo no migrado todavía', 'info');
         }
       });
 
