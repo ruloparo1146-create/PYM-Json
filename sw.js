@@ -1,12 +1,12 @@
 /* ============================================================
    PYM JSON - Service Worker
    Estrategia:
-     - HTML / navegaciÃ³n  â†’ network-first (siempre busca lo nuevo)
-     - Assets (CSS/JS)    â†’ cache-first + revalidaciÃ³n en background
-     - Otros orÃ­genes     â†’ pass-through (no cachea CDN)
+     - HTML / navegación  â†’ network-first (siempre busca lo nuevo)
+     - Assets (CSS/JS)    â†’ cache-first + revalidación en background
+     - Otros orígenes     â†’ pass-through (no cachea CDN)
    ============================================================ */
 
-const CACHE_VERSION = 'pym-json-v1';   // â† subÃ­ este nÃºmero cuando cambies archivos
+const CACHE_VERSION = 'pym-json-v2';   // â† subí este número cuando cambies archivos
 const APP_ASSETS = [
   './',
   './index.html',
@@ -67,7 +67,7 @@ self.addEventListener('activate', (event) => {
 });
 
 /* ============================================================
-   FETCH: estrategia segÃºn tipo de request
+   FETCH: estrategia según tipo de request
    ============================================================ */
 self.addEventListener('fetch', (event) => {
   const req = event.request;
@@ -83,16 +83,16 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // No cachear otros orÃ­genes (CDN, APIs, etc.)
+  // No cachear otros orígenes (CDN, APIs, etc.)
   if (url.origin !== self.location.origin) return;
 
-  // ---- NavegaciÃ³n (HTML): network-first ----
+  // ---- Navegación (HTML): network-first ----
   if (req.mode === 'navigate' || req.destination === 'document') {
     event.respondWith(networkFirst(req));
     return;
   }
 
-  // ---- Assets: cache-first con revalidaciÃ³n ----
+  // ---- Assets: cache-first con revalidación ----
   event.respondWith(cacheFirst(req));
 });
 
@@ -107,12 +107,12 @@ async function networkFirst(req) {
     cache.put(req, red.clone());
     return red;
   } catch {
-    // Sin red â†’ usar cache; si no estÃ¡, fallback al index
+    // Sin red â†’ usar cache; si no está, fallback al index
     const cached = await cache.match(req);
     if (cached) return cached;
     const index = await cache.match('./index.html');
     if (index) return index;
-    return new Response('Sin conexiÃ³n y sin cache disponible.', {
+    return new Response('Sin conexión y sin cache disponible.', {
       status: 503,
       headers: { 'Content-Type': 'text/plain; charset=utf-8' }
     });
@@ -129,7 +129,7 @@ async function cacheFirst(req) {
     }).catch(() => {});
     return cached;
   }
-  // No estÃ¡ en cache â†’ ir a red y guardar
+  // No está en cache â†’ ir a red y guardar
   try {
     const red = await fetch(req);
     if (red && red.ok) cache.put(req, red.clone());
@@ -148,7 +148,7 @@ async function cacheFirst(req) {
 self.addEventListener('message', (event) => {
   const data = event.data || {};
 
-  // Forzar actualizaciÃ³n de cache
+  // Forzar actualización de cache
   if (data.type === 'SKIP_WAITING') {
     self.skipWaiting();
     return;
