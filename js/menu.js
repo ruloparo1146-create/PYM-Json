@@ -84,7 +84,11 @@ const MENU = (() => {
     'explorar':     () => ACCION_EXPLORAR.ejecutar(),
     'json-a-csv':   () => ACCION_JSON_A_CSV.ejecutar(),
     'json-a-xlsx':  () => ACCION_JSON_A_XLSX.ejecutar(),
-    'txt-utf8':     () => ACCION_TXT_UTF8.ejecutar()
+    'txt-utf8':     () => ACCION_TXT_UTF8.ejecutar(),
+    'csv-a-rtf':    () => ACCION_CSV_A_RTF.ejecutar(),
+    'xlsx-a-rtf':   () => ACCION_XLSX_A_RTF.ejecutar(),
+    'csv-a-sqlite': () => ACCION_CSV_A_SQLITE.ejecutar()
+
   };
 
   /* --------------------------------------------------------
