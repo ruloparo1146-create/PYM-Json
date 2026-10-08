@@ -71,15 +71,18 @@ const MENU = (() => {
      Cada modulo programado se registra aca.
      -------------------------------------------------------- */
   const ACCIONES = {
-    'cargar-json':  () => ACCION_CARGAR_JSON.ejecutar(),
-    'crear-db':     () => ACCION_CREAR_DB.ejecutar(),
-    'ver-db':       () => ACCION_VER_DB.ejecutar(),
-    'exportar':     () => ACCION_EXPORTAR.ejecutar(),
-    'split':        () => ACCION_SPLIT.ejecutar(),
-    'abrir-sqlite': () => ACCION_ABRIR_SQLITE.ejecutar(),
-    'explorar':     () => ACCION_EXPLORAR.ejecutar(),
-    'json-a-csv':   () => ACCION_JSON_A_CSV.ejecutar()
-  };
+  'cargar-json':  () => ACCION_CARGAR_JSON.ejecutar(),
+  'crear-db':     () => ACCION_CREAR_DB.ejecutar(),
+  'ver-db':       () => ACCION_VER_DB.ejecutar(),
+  'exportar':     () => ACCION_EXPORTAR.ejecutar(),
+  'split':        () => ACCION_SPLIT.ejecutar(),
+  'abrir-sqlite': () => ACCION_ABRIR_SQLITE.ejecutar(),
+  'resumen-db':   () => ACCION_RESUMEN_DB.ejecutar(),    // NUEVO
+  'arbol-db':     () => ACCION_ARBOL_DB.ejecutar(),      // NUEVO
+  'diagrama-er':  () => ACCION_DIAGRAMA_ER.ejecutar(),   // NUEVO
+  'explorar':     () => ACCION_EXPLORAR.ejecutar(),
+  'json-a-csv':   () => ACCION_JSON_A_CSV.ejecutar()
+};
 
   /* --------------------------------------------------------
      Dibujar el menu
