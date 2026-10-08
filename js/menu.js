@@ -44,7 +44,7 @@ const MENU = (() => {
       programado: true,  requiereJSON: false },
 
     { num: 16, id: 'csv-a-sqlite', texto: 'CSV -> SQLite',
-      programado: false, requiereJSON: false },
+      programado: true,  requiereJSON: false },
 
     // ---- Fila 3: conversiones ----
     { num:  6, id: 'explorar',     texto: 'Explorar JSON',
@@ -56,15 +56,14 @@ const MENU = (() => {
     { num: 13, id: 'json-a-xlsx',  texto: 'JSON -> XLSX',
       programado: true,  requiereJSON: true },
 
-   { num: 14, id: 'csv-a-rtf',    texto: 'CSV -> RTF',
-  programado: true,  requiereJSON: false },
+    { num: 14, id: 'csv-a-rtf',    texto: 'CSV -> RTF',
+      programado: true,  requiereJSON: false },
 
-   { num: 15, id: 'xlsx-a-rtf',   texto: 'XLSX -> RTF',
-  programado: true,  requiereJSON: false },
+    { num: 15, id: 'xlsx-a-rtf',   texto: 'XLSX -> RTF',
+      programado: true,  requiereJSON: false },
 
-{ num: 16, id: 'csv-a-sqlite', texto: 'CSV -> SQLite',
-  programado: true,  requiereJSON: false },
-     
+    { num: 17, id: 'txt-utf8',     texto: 'TXT -> UTF-8',
+      programado: true,  requiereJSON: false }
   ];
 
   /* --------------------------------------------------------
@@ -84,11 +83,10 @@ const MENU = (() => {
     'explorar':     () => ACCION_EXPLORAR.ejecutar(),
     'json-a-csv':   () => ACCION_JSON_A_CSV.ejecutar(),
     'json-a-xlsx':  () => ACCION_JSON_A_XLSX.ejecutar(),
-    'txt-utf8':     () => ACCION_TXT_UTF8.ejecutar(),
     'csv-a-rtf':    () => ACCION_CSV_A_RTF.ejecutar(),
     'xlsx-a-rtf':   () => ACCION_XLSX_A_RTF.ejecutar(),
-    'csv-a-sqlite': () => ACCION_CSV_A_SQLITE.ejecutar()
-
+    'csv-a-sqlite': () => ACCION_CSV_A_SQLITE.ejecutar(),
+    'txt-utf8':     () => ACCION_TXT_UTF8.ejecutar()
   };
 
   /* --------------------------------------------------------
