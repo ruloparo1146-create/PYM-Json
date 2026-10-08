@@ -769,3 +769,66 @@ body[data-plataforma="movil"] .pym-modal-header h2 { font-size: 0.95rem; }
   overflow: hidden;
   background: #f0fff0;
 }
+/* ================= TXT -> UTF-8 (modal 17) ================= */
+.pym-t2u-info {
+  background: rgba(255,255,255,0.8);
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  font-size: 0.85rem;
+  color: var(--pym-titulo);
+  line-height: 1.6;
+}
+
+.pym-t2u-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 12px;
+  height: 400px;
+}
+
+@media (max-width: 800px) {
+  .pym-t2u-layout { grid-template-columns: 1fr; height: auto; }
+}
+
+.pym-t2u-izq, .pym-t2u-der {
+  display: flex;
+  flex-direction: column;
+  background: rgba(255,255,255,0.7);
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.pym-t2u-izq h4, .pym-t2u-der h4 {
+  margin: 0 0 8px;
+  font-size: 0.9rem;
+  color: var(--pym-verde-osc);
+  border-bottom: 1px solid var(--pym-borde);
+  padding-bottom: 4px;
+}
+
+.pym-t2u-izq textarea {
+  flex: 1;
+  width: 100%;
+  min-height: 300px;
+  font-family: Consolas, monospace;
+  font-size: 0.82rem;
+  padding: 8px;
+  border: 1px solid var(--pym-borde);
+  border-radius: 4px;
+  background: #fff;
+  color: var(--pym-titulo);
+  resize: none;
+}
+
+.pym-t2u-opt {
+  display: block;
+  margin: 8px 0;
+  font-size: 0.85rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.pym-t2u-opt input {
+  margin-right: 6px;
+}
