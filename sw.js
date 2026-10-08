@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'pym-util-v6';   // subido
+const CACHE_VERSION = 'pym-util-v7';   // subido
 
 const APP_ASSETS = [
   './',
@@ -24,4 +24,6 @@ const APP_ASSETS = [
   './js/acciones/json-a-csv.js',
   './js/acciones/split.js',
   './js/acciones/explorar.js'
+  // En APP_ASSETS, agregar:
+'./js/acciones/exportar.js'
 ];
