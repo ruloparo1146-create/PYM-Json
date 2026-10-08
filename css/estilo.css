@@ -434,3 +434,30 @@ body[data-plataforma="movil"] .pym-modal-header h2 { font-size: 0.95rem; }
   color: var(--pym-titulo);
   text-align: center;
 }
+/* ================= LISTA DE TABLAS (crear-db) ================= */
+.pym-lista-tablas {
+  max-height: 260px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid var(--pym-borde);
+  border-radius: 6px;
+  padding: 8px 16px;
+  margin: 10px 0;
+  font-size: 0.9rem;
+}
+
+.pym-lista-tablas ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pym-lista-tablas li {
+  padding: 3px 0;
+  border-bottom: 1px solid #e8f0e8;
+}
+
+.pym-lista-tablas li:last-child {
+  border-bottom: none;
+}
+
