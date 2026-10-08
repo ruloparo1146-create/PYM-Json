@@ -336,3 +336,25 @@ body[data-plataforma="movil"] .pym-main   { padding: 10px; }
 body[data-plataforma="movil"] .pym-btn    { font-size: 0.85rem; padding: 12px 10px; }
 body[data-plataforma="movil"] .pym-modal  { width: 96vw; max-height: 94vh; }
 body[data-plataforma="movil"] .pym-modal-header h2 { font-size: 0.95rem; }
+
+/* Boton "pendiente de migracion": gris claro con borde punteado */
+.pym-btn.pym-btn-pendiente {
+  background: #f4f4f4;
+  border-style: dashed;
+  border-color: #c0c0c0;
+  color: #888;
+  opacity: 0.75;
+}
+.pym-btn.pym-btn-pendiente .num {
+  background: #a0a0a0;
+}
+
+/* Boton "requiere JSON": gris pero solido, mas visible */
+.pym-btn:disabled:not(.pym-btn-pendiente) {
+  background: #ececec;
+  color: #999;
+  opacity: 0.9;
+}
+.pym-btn:disabled:not(.pym-btn-pendiente) .num {
+  background: #b8b8b8;
+}
