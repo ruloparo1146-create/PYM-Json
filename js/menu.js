@@ -35,13 +35,13 @@ const MENU = (() => {
       programado: true,  requiereJSON: false },
 
     { num:  7, id: 'resumen-db',   texto: 'Resumen DB',
-      programado: false, requiereJSON: false },
+  programado: true,  requiereJSON: false },
 
-    { num:  8, id: 'arbol-db',     texto: 'Arbol DB',
-      programado: false, requiereJSON: false },
-
-    { num:  9, id: 'diagrama-er',  texto: 'Diagrama ER',
-      programado: false, requiereJSON: false },
+   { num:  8, id: 'arbol-db',     texto: 'Arbol DB',
+  programado: true,  requiereJSON: false },
+     
+   { num:  9, id: 'diagrama-er',  texto: 'Diagrama ER',
+  programado: true,  requiereJSON: false },
 
     { num: 16, id: 'csv-a-sqlite', texto: 'CSV -> SQLite',
       programado: false, requiereJSON: false },
