@@ -56,14 +56,15 @@ const MENU = (() => {
     { num: 13, id: 'json-a-xlsx',  texto: 'JSON -> XLSX',
       programado: true,  requiereJSON: true },
 
-    { num: 14, id: 'csv-a-rtf',    texto: 'CSV -> RTF',
-      programado: false, requiereJSON: false },
+   { num: 14, id: 'csv-a-rtf',    texto: 'CSV -> RTF',
+  programado: true,  requiereJSON: false },
 
-    { num: 15, id: 'xlsx-a-rtf',   texto: 'XLSX -> RTF',
-      programado: false, requiereJSON: false },
+   { num: 15, id: 'xlsx-a-rtf',   texto: 'XLSX -> RTF',
+  programado: true,  requiereJSON: false },
 
-    { num: 17, id: 'txt-utf8',     texto: 'TXT -> UTF-8',
-      programado: true,  requiereJSON: false }
+{ num: 16, id: 'csv-a-sqlite', texto: 'CSV -> SQLite',
+  programado: true,  requiereJSON: false },
+     
   ];
 
   /* --------------------------------------------------------
