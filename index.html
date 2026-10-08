@@ -5,95 +5,176 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>PYM Util - Lector y Conversor</title>
 
+<!-- ============================================================
+     PROTECCION DE RUTA
+     Si no hay sesion, redirige a login.html antes de cargar nada
+     ============================================================ -->
+<script>
+(function () {
+  try {
+    var haySesion = !!localStorage.getItem('pym_json_sesion');
+    if (!haySesion) {
+      location.replace('login.html');
+    }
+  } catch (e) {
+    location.replace('login.html');
+  }
+})();
+</script>
+
+<!-- ============================================================
+     PWA
+     ============================================================ -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#4caf50">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="PYM Util">
 
-<!-- Favicon SVG inline (sin 404) -->
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-<link rel="apple-touch-icon" href="icon-192.png">
-  
-  <link rel="stylesheet" href="css/estilo.css">
+<!-- Favicon PNG -->
+<link rel="icon" type="image/png" href="PYM-Json.png">
+<link rel="apple-touch-icon" href="PYM-Json.png">
+
+<!-- Estilo principal -->
+<link rel="stylesheet" href="css/estilo.css">
+
+<!-- ============================================================
+     SQLite WASM (CDN)
+     Se inicializa desde js/sqlite.js, no usa APP_ASSETS del SW
+     ============================================================ -->
+<script src="https://cdn.jsdelivr.net/npm/sql.js@1.10.3/dist/sql-wasm.js"></script>
 </head>
+
 <body data-plataforma="pc">
 
-  <!-- HEADER -->
-  <header class="pym-header">
-    <div class="pym-header-fila">
-      <h1 class="pym-titulo">PYM Util</h1>
-      <div class="pym-reloj">
-        <div id="pym-fecha">--/--/----</div>
-        <div id="pym-hora">--:--:--</div>
-      </div>
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header class="pym-header">
+  <div class="pym-header-fila">
+    <h1 class="pym-titulo">PYM UTIL</h1>
+    <div class="pym-reloj">
+      <div id="pym-fecha">--/--/----</div>
+      <div id="pym-hora">--:--:--</div>
     </div>
-    <div class="pym-header-fila">
-      <small id="pym-info-archivo" class="pym-visitas">
-        JSON: (ninguno) &nbsp;|&nbsp; Tipo: -
-      </small>
-      <button id="pym-btn-salir" class="pym-btn-logout" title="Cerrar sesion">
-        Salir
-      </button>
-    </div>
-  </header>
+  </div>
+  <div class="pym-header-fila">
+    <small id="pym-info-archivo" class="pym-visitas">
+      JSON: (ninguno) &nbsp;|&nbsp; Tipo: -
+    </small>
+    <button id="pym-btn-salir" class="pym-btn-logout" title="Cerrar sesion">
+      Salir
+    </button>
+  </div>
+</header>
 
-  <!-- MENU -->
-  <main class="pym-main">
-    <div id="pym-menu" class="pym-menu"></div>
-  </main>
+<!-- ============================================================
+     MENU PRINCIPAL
+     Los botones los dibuja menu.js
+     ============================================================ -->
+<main class="pym-main">
+  <div id="pym-menu" class="pym-menu"></div>
+</main>
 
-  <!-- FOOTER -->
-  <footer class="pym-footer">
-    <span id="pym-estado">Sistema listo.</span>
-  </footer>
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="pym-footer">
+  <span id="pym-estado">PYM Util listo. Carga un JSON para comenzar.</span>
+</footer>
 
-  <!-- CONTENEDORES DINAMICOS -->
-  <div id="pym-modales"></div>
-  <div id="pym-toasts"></div>
-  
- <!-- ANTES de los SCRIPTS -->
-<script src="https://cdn.jsdelivr.net/npm/sql.js@1.10.3/dist/sql-wasm.js"></script>
-  
-  <!-- SCRIPTS -->
-  <script src="js/auth.js"></script>
-  <script src="js/config.js"></script>
-  <script src="js/plataforma.js"></script>
-  <script src="js/ui.js"></script>
-  <script src="js/estado.js"></script>
-  <script src="js/ventana.js"></script>
+<!-- ============================================================
+     CONTENEDORES DINAMICOS
+     ============================================================ -->
+<div id="pym-modales"></div>
+<div id="pym-toasts"></div>
 
- <script src="js/acciones/cargar-json.js"></script>
+<!-- ============================================================
+     SCRIPTS PROPIOS
+     El orden importa: cada archivo depende del anterior
+     ============================================================ -->
+
+<!-- 1. Autenticacion -->
+<script src="js/auth.js"></script>
+
+<!-- 2. Base: config, plataforma, ui -->
+<script src="js/config.js"></script>
+<script src="js/plataforma.js"></script>
+<script src="js/ui.js"></script>
+
+<!-- 3. Estado global y sistema de ventanas -->
+<script src="js/estado.js"></script>
+<script src="js/ventana.js"></script>
+
+<!-- 4. Helper SQLite (usa sql.js del CDN de arriba) -->
+<script src="js/sqlite.js"></script>
+
+<!-- 5. Acciones (cada una registra su objeto global ACCION_*) -->
+<script src="js/acciones/cargar-json.js"></script>
+<script src="js/acciones/crear-db.js"></script>
 <script src="js/acciones/split.js"></script>
 <script src="js/acciones/json-a-csv.js"></script>
-<script src="js/acciones/explorar.js"></script>   <!-- NUEVO -->
+<script src="js/acciones/explorar.js"></script>
 
-  <script src="js/menu.js"></script>
-  <script src="js/main.js"></script>
+<!-- 6. Menu (depende de TODAS las acciones anteriores) -->
+<script src="js/menu.js"></script>
 
-  <!-- BOTON SALIR -->
-  <script>
-    document.getElementById('pym-btn-salir').addEventListener('click', function () {
-      if (confirm('Cerrar sesion?')) {
-        AUTH.cerrarSesion();
-        location.replace('login.html');
-      }
-    });
-  </script>
+<!-- 7. Arranque -->
+<script src="js/main.js"></script>
 
-  <!-- SERVICE WORKER -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.register('./sw.js')
-          .then(function (reg) {
-            console.log('[SW] Registrado. Scope:', reg.scope);
-          })
-          .catch(function (err) {
-            console.warn('[SW] Error al registrar:', err);
-          });
-      });
+<!-- ============================================================
+     BOTON SALIR (logout)
+     ============================================================ -->
+<script>
+document.getElementById('pym-btn-salir').addEventListener('click', function () {
+  if (confirm('Cerrar sesion?')) {
+    if (typeof AUTH !== 'undefined' && AUTH.cerrarSesion) {
+      AUTH.cerrarSesion();
+    } else {
+      localStorage.removeItem('pym_json_sesion');
     }
-  </script>
+    location.replace('login.html');
+  }
+});
+</script>
+
+<!-- ============================================================
+     SERVICE WORKER
+     ============================================================ -->
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('./sw.js')
+      .then(function (reg) {
+        console.log('[SW] Registrado. Scope:', reg.scope);
+
+        // Detectar actualizacion disponible
+        reg.addEventListener('updatefound', function () {
+          var nuevo = reg.installing;
+          if (!nuevo) return;
+          nuevo.addEventListener('statechange', function () {
+            if (nuevo.state === 'installed' && navigator.serviceWorker.controller) {
+              console.log('[SW] Nueva version instalada. Activando...');
+              nuevo.postMessage({ type: 'SKIP_WAITING' });
+            }
+          });
+        });
+      })
+      .catch(function (err) {
+        console.warn('[SW] Error al registrar:', err);
+      });
+  });
+
+  // Auto-recarga cuando el SW nuevo toma el control
+  var recargando = false;
+  navigator.serviceWorker.addEventListener('controllerchange', function () {
+    if (recargando) return;
+    recargando = true;
+    console.log('[SW] Controlador cambio -> recargando la app');
+    location.reload();
+  });
+}
+</script>
 
 </body>
 </html>
