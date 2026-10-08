@@ -18,7 +18,7 @@ const MENU = (() => {
   programado: true,  requiereJSON: true },  // depende de JSON
 
     { num:  3, id: 'ver-db',       texto: 'Ver DB',
-      programado: false, requiereJSON: true },   // depende de JSON
+  programado: true,  requiereJSON: false },   // <- antes: false, true   // depende de JSON
 
     { num:  4, id: 'exportar',     texto: 'Exportar',
       programado: false, requiereJSON: true },   // depende de JSON
@@ -28,7 +28,7 @@ const MENU = (() => {
 
     // ---- Fila 2 ----
     { num:  5, id: 'abrir-sqlite', texto: 'Abrir SQLite',
-      programado: false, requiereJSON: false },
+  programado: true,  requiereJSON: false },   // <- antes: false, false
 
     { num:  7, id: 'resumen-db',   texto: 'Resumen DB',
       programado: false, requiereJSON: false },
@@ -63,11 +63,13 @@ const MENU = (() => {
   ];
 
 const ACCIONES = {
-  'cargar-json': () => ACCION_CARGAR_JSON.ejecutar(),
-  'crear-db':    () => ACCION_CREAR_DB.ejecutar(),      // NUEVO
-  'json-a-csv':  () => ACCION_JSON_A_CSV.ejecutar(),
-  'split':       () => ACCION_SPLIT.ejecutar(),
-  'explorar':    () => ACCION_EXPLORAR.ejecutar()
+  'cargar-json':  () => ACCION_CARGAR_JSON.ejecutar(),
+  'crear-db':     () => ACCION_CREAR_DB.ejecutar(),
+  'ver-db':       () => ACCION_VER_DB.ejecutar(),        // NUEVO
+  'abrir-sqlite': () => ACCION_ABRIR_SQLITE.ejecutar(),  // NUEVO
+  'json-a-csv':   () => ACCION_JSON_A_CSV.ejecutar(),
+  'split':        () => ACCION_SPLIT.ejecutar(),
+  'explorar':     () => ACCION_EXPLORAR.ejecutar()
 };
 
   function dibujar() {
