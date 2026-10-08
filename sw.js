@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'pym-util-v4';   // â† subido
+const CACHE_VERSION = 'pym-util-v5';   // subido
 
 const APP_ASSETS = [
   './',
@@ -13,10 +13,12 @@ const APP_ASSETS = [
   './js/ui.js',
   './js/estado.js',
   './js/ventana.js',
+  './js/sqlite.js',                        // NUEVO
   './js/menu.js',
   './js/main.js',
   './js/acciones/cargar-json.js',
+  './js/acciones/crear-db.js',             // NUEVO
   './js/acciones/json-a-csv.js',
   './js/acciones/split.js',
-  './js/acciones/explorar.js'         // <-- NUEVO
+  './js/acciones/explorar.js'
 ];
