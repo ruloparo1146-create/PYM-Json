@@ -6,7 +6,7 @@
      - Otros orígenes     â†’ pass-through (no cachea CDN)
    ============================================================ */
 
-const CACHE_VERSION = 'pym-json-v3';   // â† subí este número cuando cambies archivos
+const CACHE_VERSION = 'pym-json-v4';   // â† subí este número cuando cambies archivos
 const APP_ASSETS = [
   './',
   './index.html',
