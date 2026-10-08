@@ -460,4 +460,103 @@ body[data-plataforma="movil"] .pym-modal-header h2 { font-size: 0.95rem; }
 .pym-lista-tablas li:last-child {
   border-bottom: none;
 }
+/* ================= VISOR SQLITE (db-viewer) ================= */
+.pym-dbv-barra {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  background: rgba(255,255,255,0.7);
+  padding: 10px 12px;
+  border-radius: 6px;
+}
 
+.pym-dbv-barra label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--pym-titulo);
+}
+
+.pym-dbv-barra select,
+.pym-dbv-barra input[type="text"] {
+  padding: 6px 10px;
+  border: 1px solid var(--pym-borde);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  background: #fff;
+  color: var(--pym-titulo);
+}
+
+.pym-dbv-barra input[type="text"] {
+  flex: 1;
+  min-width: 140px;
+}
+
+.pym-btn-mini {
+  background: var(--pym-verde);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: inherit;
+}
+.pym-btn-mini:hover { background: var(--pym-verde-osc); }
+
+.pym-dbv-info {
+  font-size: 0.85rem;
+  color: var(--pym-titulo);
+  padding: 6px 0 10px;
+}
+
+.pym-dbv-tabla-wrap {
+  max-height: 480px;
+  overflow: auto;
+  border: 1px solid var(--pym-borde);
+  border-radius: 6px;
+  background: #fff;
+}
+
+.pym-tabla {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.82rem;
+}
+
+.pym-tabla th {
+  background: var(--pym-verde-claro);
+  color: var(--pym-titulo);
+  padding: 8px 10px;
+  text-align: left;
+  border-bottom: 2px solid var(--pym-borde);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.pym-tabla th:hover {
+  background: #d8f0d8;
+}
+
+.pym-tabla td {
+  padding: 5px 10px;
+  border-bottom: 1px solid #e8f0e8;
+  white-space: nowrap;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pym-tabla tr:nth-child(even) td {
+  background: #f8fff8;
+}
+
+.pym-tabla tr:hover td {
+  background: var(--pym-verde-claro);
+}
