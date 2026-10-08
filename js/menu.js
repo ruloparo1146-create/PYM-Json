@@ -62,10 +62,11 @@ const MENU = (() => {
       programado: false, requiereJSON: false }
   ];
 
-  const ACCIONES = {
+const ACCIONES = {
     'cargar-json': () => ACCION_CARGAR_JSON.ejecutar(),
     'json-a-csv':  () => ACCION_JSON_A_CSV.ejecutar(),
-    'split':       () => ACCION_SPLIT.ejecutar()
+    'split':       () => ACCION_SPLIT.ejecutar(),
+    'explorar':    () => ACCION_EXPLORAR.ejecutar()      // <-- NUEVO
   };
 
   function dibujar() {
