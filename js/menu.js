@@ -43,9 +43,9 @@ const MENU = (() => {
       programado: false, requiereJSON: false },
 
     // ---- Fila 3 ----
-    { num:  6, id: 'explorar',     texto: 'Explorar JSON',
-      programado: false, requiereJSON: true },   // depende de JSON
-
+  { num:  6, id: 'explorar',     texto: 'Explorar JSON',
+  programado: true,  requiereJSON: true },
+     
     { num: 12, id: 'json-a-csv',   texto: 'JSON -> CSV',
       programado: true,  requiereJSON: false },
 
