@@ -35,13 +35,13 @@ const MENU = (() => {
       programado: true,  requiereJSON: false },
 
     { num:  7, id: 'resumen-db',   texto: 'Resumen DB',
-  programado: true,  requiereJSON: false },
+      programado: true,  requiereJSON: false },
 
-   { num:  8, id: 'arbol-db',     texto: 'Arbol DB',
-  programado: true,  requiereJSON: false },
-     
-   { num:  9, id: 'diagrama-er',  texto: 'Diagrama ER',
-  programado: true,  requiereJSON: false },
+    { num:  8, id: 'arbol-db',     texto: 'Arbol DB',
+      programado: true,  requiereJSON: false },
+
+    { num:  9, id: 'diagrama-er',  texto: 'Diagrama ER',
+      programado: true,  requiereJSON: false },
 
     { num: 16, id: 'csv-a-sqlite', texto: 'CSV -> SQLite',
       programado: false, requiereJSON: false },
@@ -53,9 +53,9 @@ const MENU = (() => {
     { num: 12, id: 'json-a-csv',   texto: 'JSON -> CSV',
       programado: true,  requiereJSON: false },
 
-   { num: 13, id: 'json-a-xlsx',  texto: 'JSON -> XLSX',
-  programado: true,  requiereJSON: true },
-     
+    { num: 13, id: 'json-a-xlsx',  texto: 'JSON -> XLSX',
+      programado: true,  requiereJSON: true },
+
     { num: 14, id: 'csv-a-rtf',    texto: 'CSV -> RTF',
       programado: false, requiereJSON: false },
 
@@ -63,7 +63,7 @@ const MENU = (() => {
       programado: false, requiereJSON: false },
 
     { num: 17, id: 'txt-utf8',     texto: 'TXT -> UTF-8',
-  programado: true,  requiereJSON: false },
+      programado: true,  requiereJSON: false }
   ];
 
   /* --------------------------------------------------------
@@ -71,20 +71,20 @@ const MENU = (() => {
      Cada modulo programado se registra aca.
      -------------------------------------------------------- */
   const ACCIONES = {
-  'cargar-json':  () => ACCION_CARGAR_JSON.ejecutar(),
-  'crear-db':     () => ACCION_CREAR_DB.ejecutar(),
-  'ver-db':       () => ACCION_VER_DB.ejecutar(),
-  'exportar':     () => ACCION_EXPORTAR.ejecutar(),
-  'split':        () => ACCION_SPLIT.ejecutar(),
-  'abrir-sqlite': () => ACCION_ABRIR_SQLITE.ejecutar(),
-  'resumen-db':   () => ACCION_RESUMEN_DB.ejecutar(),    // NUEVO
-  'arbol-db':     () => ACCION_ARBOL_DB.ejecutar(),      // NUEVO
-  'diagrama-er':  () => ACCION_DIAGRAMA_ER.ejecutar(),   // NUEVO
-  'explorar':     () => ACCION_EXPLORAR.ejecutar(),
-  'json-a-csv':   () => ACCION_JSON_A_CSV.ejecutar(),
-  'json-a-xlsx': () => ACCION_JSON_A_XLSX.ejecutar(),
-  'txt-utf8':    () => ACCION_TXT_UTF8.ejecutar()
-};
+    'cargar-json':  () => ACCION_CARGAR_JSON.ejecutar(),
+    'crear-db':     () => ACCION_CREAR_DB.ejecutar(),
+    'ver-db':       () => ACCION_VER_DB.ejecutar(),
+    'exportar':     () => ACCION_EXPORTAR.ejecutar(),
+    'split':        () => ACCION_SPLIT.ejecutar(),
+    'abrir-sqlite': () => ACCION_ABRIR_SQLITE.ejecutar(),
+    'resumen-db':   () => ACCION_RESUMEN_DB.ejecutar(),
+    'arbol-db':     () => ACCION_ARBOL_DB.ejecutar(),
+    'diagrama-er':  () => ACCION_DIAGRAMA_ER.ejecutar(),
+    'explorar':     () => ACCION_EXPLORAR.ejecutar(),
+    'json-a-csv':   () => ACCION_JSON_A_CSV.ejecutar(),
+    'json-a-xlsx':  () => ACCION_JSON_A_XLSX.ejecutar(),
+    'txt-utf8':     () => ACCION_TXT_UTF8.ejecutar()
+  };
 
   /* --------------------------------------------------------
      Dibujar el menu
