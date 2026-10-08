@@ -21,7 +21,7 @@ const MENU = (() => {
   programado: true,  requiereJSON: false },   // <- antes: false, true   // depende de JSON
 
     { num:  4, id: 'exportar',     texto: 'Exportar',
-      programado: false, requiereJSON: true },   // depende de JSON
+  programado: true,  requiereJSON: true },   // depende de JSON
 
     { num: 10, id: 'split',        texto: 'Cortar JSON',
       programado: true,  requiereJSON: false },
@@ -69,7 +69,8 @@ const ACCIONES = {
   'abrir-sqlite': () => ACCION_ABRIR_SQLITE.ejecutar(),  // NUEVO
   'json-a-csv':   () => ACCION_JSON_A_CSV.ejecutar(),
   'split':        () => ACCION_SPLIT.ejecutar(),
-  'explorar':     () => ACCION_EXPLORAR.ejecutar()
+ // 'explorar':     () => ACCION_EXPLORAR.ejecutar()
+ 'exportar':     () => ACCION_EXPORTAR.ejecutar()       // NUEVO
 };
 
   function dibujar() {
