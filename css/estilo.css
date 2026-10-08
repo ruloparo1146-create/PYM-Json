@@ -832,3 +832,85 @@ body[data-plataforma="movil"] .pym-modal-header h2 { font-size: 0.95rem; }
 .pym-t2u-opt input {
   margin-right: 6px;
 }
+/* ================= CSV -> RTF y XLSX -> RTF (modal 14 y 15) ================= */
+.pym-c2r-info {
+  background: rgba(255,255,255,0.8);
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  font-size: 0.85rem;
+  color: var(--pym-titulo);
+}
+
+.pym-c2r-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 12px;
+}
+
+@media (max-width: 800px) {
+  .pym-c2r-layout { grid-template-columns: 1fr; }
+}
+
+.pym-c2r-izq, .pym-c2r-der {
+  background: rgba(255,255,255,0.7);
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.pym-c2r-izq h4, .pym-c2r-der h4 {
+  margin: 0 0 8px;
+  font-size: 0.9rem;
+  color: var(--pym-verde-osc);
+  border-bottom: 1px solid var(--pym-borde);
+  padding-bottom: 4px;
+}
+
+.pym-c2r-preview {
+  max-height: 420px;
+  overflow: auto;
+  border: 1px solid var(--pym-borde);
+  border-radius: 4px;
+  background: #fff;
+}
+
+.pym-c2r-opt {
+  display: block;
+  margin: 6px 0;
+  font-size: 0.85rem;
+  cursor: pointer;
+  user-select: none;
+}
+.pym-c2r-opt input { margin-right: 6px; }
+
+.pym-x2r-hojas {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+/* ================= CSV -> SQLite (modal 16) ================= */
+.pym-c2s-layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 12px;
+}
+
+@media (max-width: 800px) {
+  .pym-c2s-layout { grid-template-columns: 1fr; }
+}
+
+.pym-c2s-izq, .pym-c2s-der {
+  background: rgba(255,255,255,0.7);
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.pym-c2s-izq h4, .pym-c2s-der h4 {
+  margin: 0 0 8px;
+  font-size: 0.9rem;
+  color: var(--pym-verde-osc);
+  border-bottom: 1px solid var(--pym-borde);
+  padding-bottom: 4px;
+}
