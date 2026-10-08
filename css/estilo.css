@@ -644,3 +644,128 @@ body[data-plataforma="movil"] .pym-modal-header h2 { font-size: 0.95rem; }
 .pym-btn-mini.secundario:hover {
   background: var(--pym-verde-claro);
 }
+/* ================= RESUMEN DB (modal 7) ================= */
+.pym-res-info {
+  background: rgba(255,255,255,0.8);
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+  color: var(--pym-titulo);
+}
+
+.pym-res-tabla-wrap {
+  max-height: 480px;
+  overflow: auto;
+  border: 1px solid var(--pym-borde);
+  border-radius: 6px;
+  background: #fff;
+}
+
+.pym-res-tabla td:first-child {
+  font-family: Consolas, monospace;
+  font-size: 0.82rem;
+}
+
+/* ================= ARBOL DB (modal 8) ================= */
+.pym-arb-layout {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 12px;
+  height: 520px;
+}
+
+@media (max-width: 800px) {
+  .pym-arb-layout { grid-template-columns: 1fr; height: auto; }
+}
+
+.pym-arb-izq {
+  background: #fff;
+  border: 1px solid var(--pym-borde);
+  border-radius: 6px;
+  overflow: auto;
+  padding: 8px;
+}
+
+.pym-arb-arbol {
+  font-size: 0.85rem;
+}
+
+.pym-arb-tabla {
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s;
+  font-family: Consolas, monospace;
+  font-size: 0.82rem;
+}
+
+.pym-arb-tabla:hover {
+  background: var(--pym-verde-claro);
+}
+
+.pym-arb-tabla.activo {
+  background: var(--pym-verde);
+  color: #fff;
+}
+
+.pym-arb-tabla.activo .pym-arb-icono {
+  color: #fff;
+}
+
+.pym-arb-icono {
+  color: var(--pym-verde-osc);
+  font-weight: bold;
+}
+
+.pym-arb-cols {
+  margin-bottom: 4px;
+}
+
+.pym-arb-col {
+  font-family: Consolas, monospace;
+  font-size: 0.75rem;
+  color: #666;
+  padding: 1px 0;
+}
+
+.pym-arb-der {
+  background: #fff;
+  border: 1px solid var(--pym-borde);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.pym-arb-info {
+  padding: 8px 12px;
+  background: var(--pym-verde-claro);
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-bottom: 1px solid var(--pym-borde);
+}
+
+.pym-arb-preview {
+  flex: 1;
+  overflow: auto;
+}
+
+/* ================= DIAGRAMA ER (modal 9) ================= */
+.pym-dia-info {
+  background: rgba(255,255,255,0.8);
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  font-size: 0.85rem;
+  color: var(--pym-titulo);
+}
+
+.pym-dia-lienzo {
+  width: 100%;
+  height: 520px;
+  border: 1px solid var(--pym-borde);
+  border-radius: 6px;
+  overflow: hidden;
+  background: #f0fff0;
+}
