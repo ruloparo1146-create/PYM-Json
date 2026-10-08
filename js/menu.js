@@ -69,7 +69,7 @@ const ACCIONES = {
   'abrir-sqlite': () => ACCION_ABRIR_SQLITE.ejecutar(),  // NUEVO
   'json-a-csv':   () => ACCION_JSON_A_CSV.ejecutar(),
   'split':        () => ACCION_SPLIT.ejecutar(),
- // 'explorar':     () => ACCION_EXPLORAR.ejecutar()
+  'explorar':     () => ACCION_EXPLORAR.ejecutar()
  'exportar':     () => ACCION_EXPORTAR.ejecutar()       // NUEVO
 };
 
