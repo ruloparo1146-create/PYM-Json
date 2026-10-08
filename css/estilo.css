@@ -560,3 +560,87 @@ body[data-plataforma="movil"] .pym-modal-header h2 { font-size: 0.95rem; }
 .pym-tabla tr:hover td {
   background: var(--pym-verde-claro);
 }
+/* ================= EXPORTAR (modal 4) ================= */
+.pym-exp-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 700px) {
+  .pym-exp-layout { grid-template-columns: 1fr; }
+}
+
+.pym-exp-izq, .pym-exp-der {
+  background: rgba(255,255,255,0.7);
+  border-radius: 6px;
+  padding: 10px 14px;
+}
+
+.pym-exp-izq h4, .pym-exp-der h4 {
+  margin: 4px 0 8px;
+  font-size: 0.9rem;
+  color: var(--pym-verde-osc);
+  border-bottom: 1px solid var(--pym-borde);
+  padding-bottom: 4px;
+}
+
+.pym-exp-cols {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid var(--pym-borde);
+  border-radius: 4px;
+  background: #fff;
+  padding: 6px 10px;
+  margin-bottom: 8px;
+}
+
+.pym-exp-col {
+  display: block;
+  padding: 3px 0;
+  font-size: 0.85rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.pym-exp-col input {
+  margin-right: 6px;
+}
+
+.pym-exp-radios {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+  font-size: 0.85rem;
+}
+
+.pym-exp-opts {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85rem;
+}
+
+.pym-exp-opts label {
+  cursor: pointer;
+  user-select: none;
+}
+
+.pym-exp-estado {
+  margin-top: 12px;
+  padding: 8px 12px;
+  background: rgba(255,255,255,0.8);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: var(--pym-titulo);
+}
+
+.pym-btn-mini.secundario {
+  background: #fff;
+  color: var(--pym-titulo);
+  border: 1px solid var(--pym-borde);
+}
+.pym-btn-mini.secundario:hover {
+  background: var(--pym-verde-claro);
+}
