@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'pym-util-v9';   // subido
+const CACHE_VERSION = 'pym-util-v10';   // subido
 
 const APP_ASSETS = [
   './',
@@ -33,4 +33,8 @@ const APP_ASSETS = [
 // En APP_ASSETS, agregar:
 './js/acciones/json-a-xlsx.js',
 './js/acciones/txt-utf8.js'
+// En APP_ASSETS, agregar:
+'./js/acciones/csv-a-rtf.js',
+'./js/acciones/xlsx-a-rtf.js',
+'./js/acciones/csv-a-sqlite.js'
 ];
