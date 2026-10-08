@@ -81,7 +81,9 @@ const MENU = (() => {
   'arbol-db':     () => ACCION_ARBOL_DB.ejecutar(),      // NUEVO
   'diagrama-er':  () => ACCION_DIAGRAMA_ER.ejecutar(),   // NUEVO
   'explorar':     () => ACCION_EXPLORAR.ejecutar(),
-  'json-a-csv':   () => ACCION_JSON_A_CSV.ejecutar()
+  'json-a-csv':   () => ACCION_JSON_A_CSV.ejecutar(),
+  'json-a-xlsx': () => ACCION_JSON_A_XLSX.ejecutar(),
+  'txt-utf8':    () => ACCION_TXT_UTF8.ejecutar()
 };
 
   /* --------------------------------------------------------
