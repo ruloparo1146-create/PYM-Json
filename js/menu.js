@@ -53,9 +53,9 @@ const MENU = (() => {
     { num: 12, id: 'json-a-csv',   texto: 'JSON -> CSV',
       programado: true,  requiereJSON: false },
 
-    { num: 13, id: 'json-a-xlsx',  texto: 'JSON -> XLSX',
-      programado: false, requiereJSON: false },
-
+   { num: 13, id: 'json-a-xlsx',  texto: 'JSON -> XLSX',
+  programado: true,  requiereJSON: true },
+     
     { num: 14, id: 'csv-a-rtf',    texto: 'CSV -> RTF',
       programado: false, requiereJSON: false },
 
@@ -63,7 +63,7 @@ const MENU = (() => {
       programado: false, requiereJSON: false },
 
     { num: 17, id: 'txt-utf8',     texto: 'TXT -> UTF-8',
-      programado: false, requiereJSON: false }
+  programado: true,  requiereJSON: false },
   ];
 
   /* --------------------------------------------------------
