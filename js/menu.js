@@ -4,8 +4,7 @@
    Estados:
      - programado: true  -> tiene .js, funciona
      - programado: false -> sin .js todavia, muestra "en migracion"
-     - requiereJSON      -> se deshabilita si no hay JSON cargado
-                            (solo aplica a los programados)
+     - requiereJSON: true -> se deshabilita si no hay JSON cargado
    ============================================================ */
 
 const MENU = (() => {
@@ -16,16 +15,16 @@ const MENU = (() => {
       programado: true,  requiereJSON: false },
 
     { num:  2, id: 'crear-db',     texto: 'Crear DB',
-      programado: false, requiereJSON: true },   // <- usa JSON cargado
+      programado: false, requiereJSON: true },   // depende de JSON
 
     { num:  3, id: 'ver-db',       texto: 'Ver DB',
-      programado: false, requiereJSON: true },
+      programado: false, requiereJSON: true },   // depende de JSON
 
     { num:  4, id: 'exportar',     texto: 'Exportar',
-      programado: false, requiereJSON: true },
+      programado: false, requiereJSON: true },   // depende de JSON
 
     { num: 10, id: 'split',        texto: 'Cortar JSON',
-      programado: true,  requiereJSON: false },  // abre picker si no hay JSON
+      programado: true,  requiereJSON: false },
 
     // ---- Fila 2 ----
     { num:  5, id: 'abrir-sqlite', texto: 'Abrir SQLite',
@@ -45,10 +44,10 @@ const MENU = (() => {
 
     // ---- Fila 3 ----
     { num:  6, id: 'explorar',     texto: 'Explorar JSON',
-      programado: false, requiereJSON: false },
+      programado: false, requiereJSON: true },   // depende de JSON
 
     { num: 12, id: 'json-a-csv',   texto: 'JSON -> CSV',
-      programado: true,  requiereJSON: false },  // abre picker si no hay JSON
+      programado: true,  requiereJSON: false },
 
     { num: 13, id: 'json-a-xlsx',  texto: 'JSON -> XLSX',
       programado: false, requiereJSON: false },
@@ -63,7 +62,6 @@ const MENU = (() => {
       programado: false, requiereJSON: false }
   ];
 
-  // Mapa id -> funcion. Solo los programados.
   const ACCIONES = {
     'cargar-json': () => ACCION_CARGAR_JSON.ejecutar(),
     'json-a-csv':  () => ACCION_JSON_A_CSV.ejecutar(),
@@ -85,35 +83,33 @@ const MENU = (() => {
         '<span class="num">' + b.num + '</span>' +
         UI.esc(b.texto);
 
-      // --- Estado del boton ---
       let deshabilitado = false;
       let tooltip = '';
 
-      if (!b.programado) {
-        // Modulo aun no migrado: queda clickeable pero avisa
-        // (no lo deshabilitamos para que el usuario pueda saber que existe)
-        deshabilitado = false;
-        tooltip = 'En migracion: proximamente disponible';
-        btn.classList.add('pym-btn-pendiente');
-      } else if (b.requiereJSON && !hayJSON) {
-        // Programado pero necesita un JSON cargado
+      // 1) Si requiere JSON y no hay -> deshabilitado
+      if (b.requiereJSON && !hayJSON) {
         deshabilitado = true;
         tooltip = 'Primero carga un JSON';
-      } else {
+      }
+      // 2) Si no esta programado -> deshabilitado con tooltip distinto
+      else if (!b.programado) {
+        deshabilitado = true;
+        tooltip = 'En migracion: proximamente disponible';
+        btn.classList.add('pym-btn-pendiente');
+      }
+      // 3) Todo OK
+      else {
         tooltip = 'Ejecutar: ' + b.texto;
       }
 
       btn.disabled = deshabilitado;
       btn.title = tooltip;
 
-      // --- Click handler ---
       btn.addEventListener('click', async () => {
-        // Si no esta programado, avisamos
         if (!b.programado) {
           UI.toast('Modulo "' + b.texto + '" en migracion. Proximamente.', 'info');
           return;
         }
-
         const fn = ACCIONES[b.id];
         if (typeof fn === 'function') {
           try {
@@ -122,8 +118,6 @@ const MENU = (() => {
             console.error('[MENU] Error en ' + b.id + ':', e);
             UI.toast('Error: ' + e.message, 'error');
           }
-        } else {
-          UI.toast('Modulo "' + b.texto + '" todavia no esta disponible', 'info');
         }
       });
 
