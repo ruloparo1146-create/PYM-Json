@@ -63,11 +63,12 @@ const MENU = (() => {
   ];
 
 const ACCIONES = {
-    'cargar-json': () => ACCION_CARGAR_JSON.ejecutar(),
-    'json-a-csv':  () => ACCION_JSON_A_CSV.ejecutar(),
-    'split':       () => ACCION_SPLIT.ejecutar(),
-    'explorar':    () => ACCION_EXPLORAR.ejecutar()      // <-- NUEVO
-  };
+  'cargar-json': () => ACCION_CARGAR_JSON.ejecutar(),
+  'crear-db':    () => ACCION_CREAR_DB.ejecutar(),      // NUEVO
+  'json-a-csv':  () => ACCION_JSON_A_CSV.ejecutar(),
+  'split':       () => ACCION_SPLIT.ejecutar(),
+  'explorar':    () => ACCION_EXPLORAR.ejecutar()
+};
 
   function dibujar() {
     const cont = document.getElementById('pym-menu');
