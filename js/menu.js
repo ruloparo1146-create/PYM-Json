@@ -15,7 +15,7 @@ const MENU = (() => {
       programado: true,  requiereJSON: false },
 
     { num:  2, id: 'crear-db',     texto: 'Crear DB',
-      programado: false, requiereJSON: true },   // depende de JSON
+  programado: true,  requiereJSON: true },  // depende de JSON
 
     { num:  3, id: 'ver-db',       texto: 'Ver DB',
       programado: false, requiereJSON: true },   // depende de JSON
