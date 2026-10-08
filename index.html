@@ -7,7 +7,7 @@
 
 <!-- ============================================================
      PROTECCION DE RUTA
-     Si no hay sesion, redirige a login.html antes de cargar nada
+     Si no hay sesion, redirige a login.html
      ============================================================ -->
 <script>
 (function () {
@@ -40,16 +40,9 @@
 
 <!-- ============================================================
      SQLite WASM (CDN)
-     Se inicializa desde js/sqlite.js, no usa APP_ASSETS del SW
+     Se inicializa desde js/sqlite.js
      ============================================================ -->
 <script src="https://cdn.jsdelivr.net/npm/sql.js@1.10.3/dist/sql-wasm.js"></script>
-
-<!-- 4. Helper SQLite -->
-<script src="js/sqlite.js"></script>
-
-<!-- 5. Visor SQLite reutilizable -->
-<script src="js/db-viewer.js"></script>     
-     
 </head>
 
 <body data-plataforma="pc">
@@ -77,7 +70,6 @@
 
 <!-- ============================================================
      MENU PRINCIPAL
-     Los botones los dibuja menu.js
      ============================================================ -->
 <main class="pym-main">
   <div id="pym-menu" class="pym-menu"></div>
@@ -97,8 +89,7 @@
 <div id="pym-toasts"></div>
 
 <!-- ============================================================
-     SCRIPTS PROPIOS
-     El orden importa: cada archivo depende del anterior
+     SCRIPTS PROPIOS (el orden importa)
      ============================================================ -->
 
 <!-- 1. Autenticacion -->
@@ -113,32 +104,28 @@
 <script src="js/estado.js"></script>
 <script src="js/ventana.js"></script>
 
-<!-- 4. Helper SQLite (usa sql.js del CDN de arriba) -->
+<!-- 4. Helper SQLite -->
 <script src="js/sqlite.js"></script>
 
-<!-- 5. Acciones (cada una registra su objeto global ACCION_*) -->
-<!-- 6. Acciones -->
+<!-- 5. Visor SQLite reutilizable -->
+<script src="js/db-viewer.js"></script>
+
+<!-- 6. Acciones (cada una registra su objeto global ACCION_*) -->
 <script src="js/acciones/cargar-json.js"></script>
 <script src="js/acciones/crear-db.js"></script>
-<script src="js/acciones/ver-db.js"></script>          <!-- NUEVO -->
-<script src="js/acciones/abrir-sqlite.js"></script>    <!-- NUEVO -->
+<script src="js/acciones/ver-db.js"></script>
+<script src="js/acciones/abrir-sqlite.js"></script>
 <script src="js/acciones/split.js"></script>
 <script src="js/acciones/json-a-csv.js"></script>
 <script src="js/acciones/explorar.js"></script>
-<script src="js/acciones/exportar.js"></script>    <!-- NUEVO -->
+<script src="js/acciones/exportar.js"></script>
 
-<!-- 6. Menu (depende de TODAS las acciones anteriores) -->
-<script src="js/menu.js"></script>
-
-<!-- 7. Arranque -->
-<script src="js/main.js"></script>
-
-     <!-- 7. Menu -->
+<!-- 7. Menu (depende de TODAS las acciones) -->
 <script src="js/menu.js"></script>
 
 <!-- 8. Arranque -->
 <script src="js/main.js"></script>
-     
+
 <!-- ============================================================
      BOTON SALIR (logout)
      ============================================================ -->
@@ -165,7 +152,6 @@ if ('serviceWorker' in navigator) {
       .then(function (reg) {
         console.log('[SW] Registrado. Scope:', reg.scope);
 
-        // Detectar actualizacion disponible
         reg.addEventListener('updatefound', function () {
           var nuevo = reg.installing;
           if (!nuevo) return;
@@ -182,7 +168,6 @@ if ('serviceWorker' in navigator) {
       });
   });
 
-  // Auto-recarga cuando el SW nuevo toma el control
   var recargando = false;
   navigator.serviceWorker.addEventListener('controllerchange', function () {
     if (recargando) return;
